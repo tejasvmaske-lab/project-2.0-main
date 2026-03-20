@@ -1,12 +1,12 @@
 import mysql.connector
 from mysql.connector import Error
 from datetime import datetime
-
 # Database Configuration - Update these!
 db_config = {
-    'host': 'localhost',
-    'user': 'root',
-    'password': 'Urus@0657', # <-- Update this
+    'host': 'mysql-843df0b-tejas-894a.b.aivencloud.com',
+    'user': 'avnadmin',
+    'password': '', # <-- Update this
+    'port': 23555
 }
 
 DB_NAME = 'inventory_management' # Your database name

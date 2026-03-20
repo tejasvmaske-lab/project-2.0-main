@@ -42,20 +42,37 @@ def generate_barcode(sku):
         if not sku or sku.strip() == '':
             print("Error: SKU cannot be empty")
             return None
-            
-        # Create the filename without extension (python-barcode adds .svg automatically)
-        barcode_filename = os.path.join(BARCODE_DIR, sku)
         
-        # Generate the barcode
+        # Validate SKU - remove special characters that might cause issues
+        sanitized_sku = str(sku).replace('/', '_').replace('\\', '_')
+        
+        # Ensure the barcode directory exists
+        if not os.path.exists(BARCODE_DIR):
+            os.makedirs(BARCODE_DIR, exist_ok=True)
+            print(f"✓ Created barcode directory: {BARCODE_DIR}")
+        
+        # Create the file path
+        barcode_file = os.path.join(BARCODE_DIR, sanitized_sku)
+        
+        print(f"Generating barcode for SKU: {sku} -> {barcode_file}")
+        
+        # Generate the barcode (python-barcode adds .svg automatically)
         code = Code128(sku, writer=SVGWriter())
-        code.save(barcode_filename)
+        code.save(barcode_file)
         
-        # Return the path with the .svg extension that was automatically added
-        barcode_path = f'{BARCODE_DIR}/{sku}.svg'.replace('\\', '/')
-        print(f"✓ Barcode generated: {barcode_path}")
-        return barcode_path
+        # Verify the file was created
+        if os.path.exists(barcode_file + '.svg'):
+            barcode_path = f'{BARCODE_DIR}/{sanitized_sku}.svg'.replace('\\', '/')
+            print(f"✓ Barcode generated successfully: {barcode_path}")
+            return barcode_path
+        else:
+            print(f"Error: Barcode file was not created at {barcode_file}.svg")
+            return None
+            
     except Exception as e:
-        print(f"Error generating barcode for SKU {sku}: {e}")
+        print(f"Error generating barcode for SKU {sku}: {type(e).__name__}: {e}")
+        import traceback
+        traceback.print_exc()
         return None
 
 # ==================== ROUTES ====================

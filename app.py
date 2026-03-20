@@ -39,10 +39,21 @@ def get_db_connection():
 def generate_barcode(sku):
     """Generate barcode for product SKU"""
     try:
-        barcode_path = os.path.join(BARCODE_DIR, sku)
+        if not sku or sku.strip() == '':
+            print("Error: SKU cannot be empty")
+            return None
+            
+        # Create the filename without extension (python-barcode adds .svg automatically)
+        barcode_filename = os.path.join(BARCODE_DIR, sku)
+        
+        # Generate the barcode
         code = Code128(sku, writer=SVGWriter())
-        code.save(barcode_path)
-        return f'{BARCODE_DIR}/{sku}.svg'
+        code.save(barcode_filename)
+        
+        # Return the path with the .svg extension that was automatically added
+        barcode_path = f'{BARCODE_DIR}/{sku}.svg'.replace('\\', '/')
+        print(f"✓ Barcode generated: {barcode_path}")
+        return barcode_path
     except Exception as e:
         print(f"Error generating barcode for SKU {sku}: {e}")
         return None
@@ -132,17 +143,27 @@ def add_product():
     quantity = int(request.form.get('quantity', 0))
     shelf_number = request.form.get('shelf_number', '').strip()
     reorder_level = int(request.form.get('reorder_level', 0))
+    
+    # Generate barcode
     barcode_path = generate_barcode(sku)
+    if not barcode_path:
+        flash(f'Error: Failed to generate barcode for SKU "{sku}". Check the logs for details.', 'error')
+        return redirect(url_for('view_products'))
+    
     created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     
     conn = get_db_connection()
+    if not conn:
+        flash('Error: Cannot connect to database', 'error')
+        return redirect(url_for('view_products'))
+    
     cursor = conn.cursor()
     
     try:
         cursor.execute('INSERT INTO product_table (sku, name, category_id, price, quantity, shelf_number, reorder_level, barcode_path, created_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)', 
                        (sku, name, category_id, price, quantity, shelf_number, reorder_level, barcode_path, created_at))
         conn.commit()
-        flash(f'Product "{name}" added successfully.', 'success')
+        flash(f'Product "{name}" added successfully with barcode.', 'success')
     except Error as e:
         conn.rollback()
         flash(f'Database error: {e}', 'error')

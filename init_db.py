@@ -11,7 +11,7 @@ db_config = {
     'port': int(os.getenv('DB_PORT', 23555))
 }
 
-DB_NAME = 'inventory_management' # Your database name
+DB_NAME = os.getenv('DB_NAME', 'inventory_management')
 
 def init_db():
     """Initialize the MySQL database with required tables"""

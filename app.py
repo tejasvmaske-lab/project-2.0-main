@@ -14,7 +14,8 @@ db_config = {
     'host': os.getenv('DB_HOST', 'localhost'),
     'user': os.getenv('DB_USER', 'root'),
     'password': os.getenv('DB_PASSWORD', 'Urus@0657'),
-    'database': os.getenv('DB_NAME', 'inventory_management')
+    'database': os.getenv('DB_NAME', 'inventory_management'),
+    'port': int(os.getenv('DB_PORT', 3306))
 }
 
 BARCODE_DIR = 'static/barcodes'
@@ -257,7 +258,4 @@ def return_product(id):
     return redirect(url_for('view_products'))
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
-
-if __name__ == "__main__":
-    app.run()
+    app.run(debug=True, port=5000, use_reloader=False)

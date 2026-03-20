@@ -68,43 +68,54 @@ def add_category():
         conn.close()
     return redirect(url_for('view_products'))
 
+@app.route('/favicon.ico')
+def favicon():
+    return '', 204
+
 @app.route('/products')
 def view_products():
     conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
+    if not conn:
+        return "Error: Cannot connect to database. Please check your database credentials and server configuration.", 500
     
-    category_id = request.args.get('category_id')
-    search_query = request.args.get('search', '').strip()
+    try:
+        cursor = conn.cursor(dictionary=True)
     
-    base_query = '''
-        SELECT p.*, c.name as category_name 
-        FROM product_table p
-        LEFT JOIN category_table c ON p.category_id = c.id
-        WHERE 1=1
-    '''
-    params = []
-    
-    if category_id:
-        base_query += ' AND p.category_id = %s'
-        params.append(category_id)
-    
-    if search_query:
-        base_query += ' AND LOWER(p.name) LIKE LOWER(%s)'
-        params.append(f'%{search_query}%')
-    
-    base_query += ' ORDER BY p.id DESC'
-    
-    cursor.execute(base_query, params)
-    products = cursor.fetchall()
-    
-    cursor.execute('SELECT * FROM category_table ORDER BY name')
-    categories = cursor.fetchall()
-    
-    cursor.close()
-    conn.close()
-    
-    return render_template('products.html', products=products, categories=categories, 
-                           selected_category=category_id, search_query=search_query)
+        category_id = request.args.get('category_id')
+        search_query = request.args.get('search', '').strip()
+        
+        base_query = '''
+            SELECT p.*, c.name as category_name 
+            FROM product_table p
+            LEFT JOIN category_table c ON p.category_id = c.id
+            WHERE 1=1
+        '''
+        params = []
+        
+        if category_id:
+            base_query += ' AND p.category_id = %s'
+            params.append(category_id)
+        
+        if search_query:
+            base_query += ' AND LOWER(p.name) LIKE LOWER(%s)'
+            params.append(f'%{search_query}%')
+        
+        base_query += ' ORDER BY p.id DESC'
+        
+        cursor.execute(base_query, params)
+        products = cursor.fetchall()
+        
+        cursor.execute('SELECT * FROM category_table ORDER BY name')
+        categories = cursor.fetchall()
+        
+        cursor.close()
+        conn.close()
+        
+        return render_template('products.html', products=products, categories=categories, 
+                               selected_category=category_id, search_query=search_query)
+    except Exception as e:
+        conn.close()
+        return f"Database Error: {str(e)}", 500
 
 @app.route('/products/add', methods=['POST'])
 def add_product():

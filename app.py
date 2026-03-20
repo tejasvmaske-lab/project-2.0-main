@@ -3,8 +3,12 @@ import mysql.connector
 from mysql.connector import Error
 from datetime import datetime
 import os
+from dotenv import load_dotenv
 from barcode import Code128
 from barcode.writer import SVGWriter
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = 'inventory-management-secret-key-2024'
@@ -15,7 +19,9 @@ db_config = {
     'user': os.getenv('DB_USER', 'root'),
     'password': os.getenv('DB_PASSWORD', 'Urus@0657'),
     'database': os.getenv('DB_NAME', 'inventory_management'),
-    'port': int(os.getenv('DB_PORT', 3306))
+    'port': int(os.getenv('DB_PORT', 3306)),
+    'ssl_disabled': False,
+    'autocommit': True
 }
 
 BARCODE_DIR = 'static/barcodes'

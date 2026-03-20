@@ -2,13 +2,19 @@ import mysql.connector
 from mysql.connector import Error
 from datetime import datetime
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Database Configuration - Use environment variables for security!
 db_config = {
     'host': os.getenv('DB_HOST', 'mysql-843df0b-tejas-894a.b.aivencloud.com'),
     'user': os.getenv('DB_USER', 'avnadmin'),
-    'password': os.getenv('DB_PASSWORD'),  # Required - set in environment
-    'port': int(os.getenv('DB_PORT', 23555))
+    'password': os.getenv('DB_PASSWORD', 'AVNS_8yo1YBfIXZSH3v1fXIz'),
+    'port': int(os.getenv('DB_PORT', 23555)),
+    'ssl_disabled': False,
+    'autocommit': True
 }
 
 DB_NAME = os.getenv('DB_NAME', 'inventory_management')
@@ -86,10 +92,13 @@ def init_db():
     except Error as e:
         print(f"Error: {e}")
     finally:
-        if conn.is_connected():
-            cursor.close()
-            conn.close()
-            print("✓ MySQL connection closed")
+        try:
+            if conn and conn.is_connected():
+                cursor.close()
+                conn.close()
+                print("✓ MySQL connection closed")
+        except:
+            pass
 
 if __name__ == '__main__':
     init_db()

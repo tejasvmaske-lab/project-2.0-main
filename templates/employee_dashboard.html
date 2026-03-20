@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard - Operations</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        nav a {
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background: #f0f0f0;
+            color: #27ae60;
+        }
+
+        nav a.active {
+            background: #27ae60;
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #1b5e20;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid #27ae60;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .card.accent {
+            border-left-color: #e74c3c;
+        }
+
+        .card.warning {
+            border-left-color: #f39c12;
+        }
+
+        .card-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .card-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .card-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+        }
+
+        .card.accent .card-button {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+
+        .card.accent .card-button:hover {
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+        }
+
+        .card.warning .card-button {
+            background: linear-gradient(135deg, #f39c12 0%, #d68910 100%);
+        }
+
+        .card.warning .card-button:hover {
+            box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1b5e20;
+            margin-bottom: 20px;
+            margin-top: 30px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .section-divider {
+            height: 2px;
+            background: rgba(27, 94, 32, 0.2);
+            margin: 40px 0;
+        }
+
+        .quick-note {
+            background: white;
+            border-left: 5px solid #2196F3;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .quick-note p {
+            color: #555;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="/admin">📊 Admin</a>
+        <a href="/employee" class="active">👨‍💼 Employee</a>
+    </nav>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>👨‍💼 Employee Dashboard</h1>
+            <p>Quick access to daily supermarket operations and transactions</p>
+        </div>
+
+        <!-- Quick Note -->
+        <div class="quick-note">
+            <p>💡 <strong>Tip:</strong> All operations can be performed from here. Use barcode scanning for faster checkout and restocking.</p>
+        </div>
+
+        <!-- Quick Actions Section -->
+        <div class="section-title">⚡ Quick Actions</div>
+        <div class="dashboard-grid">
+            <!-- Scan Product -->
+            <div class="card">
+                <div class="card-icon">📱</div>
+                <h3>Scan Product</h3>
+                <p>Quickly scan or enter a barcode to view product details and options.</p>
+                <a href="/scan" class="card-button">Open Scanner</a>
+            </div>
+
+            <!-- Sell Product -->
+            <div class="card">
+                <div class="card-icon">💳</div>
+                <h3>Sell Product</h3>
+                <p>Process a product sale. Scan and reduce stock quantity.</p>
+                <a href="/scan" class="card-button">Start Sale</a>
+            </div>
+
+            <!-- Buy / Restock -->
+            <div class="card warning">
+                <div class="card-icon">📦</div>
+                <h3>Buy / Restock</h3>
+                <p>Add products to inventory when restocking arrives.</p>
+                <a href="/products" class="card-button">Restock Item</a>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Returns & Issues Section -->
+        <div class="section-title">🔄 Returns & Issues</div>
+        <div class="dashboard-grid">
+            <!-- Handle Returns -->
+            <div class="card accent">
+                <div class="card-icon">↩️</div>
+                <h3>Process Returns</h3>
+                <p>Handle customer product returns and add items back to inventory.</p>
+                <a href="/returns" class="card-button">Process Return</a>
+            </div>
+
+            <!-- Manual Barcode Entry -->
+            <div class="card">
+                <div class="card-icon">⌨️</div>
+                <h3>Manual Entry</h3>
+                <p>Manually enter SKU or barcode when scanner is unavailable.</p>
+                <a href="/scan" class="card-button">Manual Entry</a>
+            </div>
+
+            <!-- View Transaction History -->
+            <div class="card">
+                <div class="card-icon">📜</div>
+                <h3>Transaction History</h3>
+                <p>View recent sales, purchases, and returns for the day.</p>
+                <a href="/stock-history" class="card-button">View History</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

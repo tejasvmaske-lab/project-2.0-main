@@ -69,7 +69,17 @@ def generate_barcode(sku):
 
 @app.route('/')
 def index():
-    return redirect(url_for('view_products'))
+    return redirect(url_for('admin_dashboard'))
+
+@app.route('/admin')
+def admin_dashboard():
+    """Admin Dashboard - Inventory Management & Reports"""
+    return render_template('admin_dashboard.html')
+
+@app.route('/employee')
+def employee_dashboard():
+    """Employee Dashboard - Daily Operations"""
+    return render_template('employee_dashboard.html')
 
 @app.route('/add_category', methods=['POST'])
 def add_category():

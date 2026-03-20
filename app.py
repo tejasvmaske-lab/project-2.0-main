@@ -11,10 +11,10 @@ app.secret_key = 'inventory-management-secret-key-2024'
 
 # --- MYSQL CONFIGURATION ---
 db_config = {
-    'host': 'localhost',
-    'user': 'root',
-    'password': 'Urus@0657', # <-- CHANGE THIS
-    'database': 'inventory_management'   # <-- CHANGE THIS TO YOUR DB NAME
+    'host': os.getenv('DB_HOST', 'localhost'),
+    'user': os.getenv('DB_USER', 'root'),
+    'password': os.getenv('DB_PASSWORD', 'Urus@0657'),
+    'database': os.getenv('DB_NAME', 'inventory_management')
 }
 
 BARCODE_DIR = 'static/barcodes'

@@ -11,7 +11,7 @@ load_dotenv()
 db_config = {
     'host': os.getenv('DB_HOST', 'mysql-843df0b-tejas-894a.b.aivencloud.com'),
     'user': os.getenv('DB_USER', 'avnadmin'),
-    'password': os.getenv('DB_PASSWORD', 'AVNS_8yo1YBfIXZSH3v1fXIz'),
+    'password': os.getenv('DB_PASSWORD'),  # Required - set in .env file
     'port': int(os.getenv('DB_PORT', 23555)),
     'ssl_disabled': False,
     'autocommit': True

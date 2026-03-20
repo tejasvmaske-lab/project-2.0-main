@@ -5,16 +5,21 @@ Run: python clean_history.py
 """
 import subprocess
 import sys
+import os
 
-# The exposed password to remove
-EXPOSED_PASSWORD = "AVNS_8yo1YBfIXZSH3v1fXIz"
+# Load the password from environment variable (set in .env)
+EXPOSED_PASSWORD = os.getenv('DB_PASSWORD', '')
+
+if not EXPOSED_PASSWORD:
+    print("Error: DB_PASSWORD environment variable not set. Please set it in your .env file.")
+    sys.exit(1)
 
 try:
     print("🔄 Cleaning git history of exposed credentials...")
     # Use git filter-repo if available, otherwise filter-branch
     cmd = [
         "git", "filter-repo",
-        "--replace-text", f".gitignore::AVNS_8yo1YBfIXZSH3v1fXIz==>",
+        "--replace-text", f".gitignore::{EXPOSED_PASSWORD}==>",
     ]
     
     result = subprocess.run(cmd, capture_output=True, text=True)

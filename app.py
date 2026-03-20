@@ -5,7 +5,9 @@ from datetime import datetime
 import os
 from dotenv import load_dotenv
 from barcode import Code128
-from barcode.writer import SVGWriter
+from barcode.writer import ImageWriter
+from io import BytesIO
+import base64
 
 # Load environment variables from .env file
 load_dotenv()
@@ -25,7 +27,6 @@ db_config = {
 }
 
 BARCODE_DIR = 'static/barcodes'
-os.makedirs(BARCODE_DIR, exist_ok=True)
 
 def get_db_connection():
     """Create MySQL database connection"""
@@ -37,37 +38,26 @@ def get_db_connection():
         return None
 
 def generate_barcode(sku):
-    """Generate barcode for product SKU"""
+    """Generate barcode as base64 PNG (no file writing - works on Vercel)"""
     try:
         if not sku or sku.strip() == '':
             print("Error: SKU cannot be empty")
             return None
         
-        # Validate SKU - remove special characters that might cause issues
-        sanitized_sku = str(sku).replace('/', '_').replace('\\', '_')
+        print(f"Generating barcode for SKU: {sku}")
         
-        # Ensure the barcode directory exists
-        if not os.path.exists(BARCODE_DIR):
-            os.makedirs(BARCODE_DIR, exist_ok=True)
-            print(f"✓ Created barcode directory: {BARCODE_DIR}")
+        # Generate barcode as PNG in memory (no file system access needed)
+        buffer = BytesIO()
+        code = Code128(sku, writer=ImageWriter())
+        code.write(buffer, options={'write_text': True})
+        buffer.seek(0)
         
-        # Create the file path
-        barcode_file = os.path.join(BARCODE_DIR, sanitized_sku)
+        # Convert to base64
+        barcode_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+        barcode_data = f'data:image/png;base64,{barcode_base64}'
         
-        print(f"Generating barcode for SKU: {sku} -> {barcode_file}")
-        
-        # Generate the barcode (python-barcode adds .svg automatically)
-        code = Code128(sku, writer=SVGWriter())
-        code.save(barcode_file)
-        
-        # Verify the file was created
-        if os.path.exists(barcode_file + '.svg'):
-            barcode_path = f'{BARCODE_DIR}/{sanitized_sku}.svg'.replace('\\', '/')
-            print(f"✓ Barcode generated successfully: {barcode_path}")
-            return barcode_path
-        else:
-            print(f"Error: Barcode file was not created at {barcode_file}.svg")
-            return None
+        print(f"✓ Barcode generated successfully for SKU: {sku}")
+        return barcode_data
             
     except Exception as e:
         print(f"Error generating barcode for SKU {sku}: {type(e).__name__}: {e}")

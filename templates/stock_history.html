@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Movement History</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 20px;
+        }
+        
+        .header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .header h1 {
+            color: #333;
+            font-weight: bold;
+            margin: 0;
+        }
+        
+        .header p {
+            color: #666;
+            margin: 5px 0 0 0;
+            font-size: 0.95rem;
+        }
+        
+        .btn-back {
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        
+        .table-wrapper {
+            overflow-x: auto;
+        }
+        
+        table {
+            margin-top: 20px;
+        }
+        
+        th {
+            background-color: #667eea;
+            color: white;
+            font-weight: 600;
+            text-align: center;
+            padding: 15px 10px;
+            border: none;
+        }
+        
+        td {
+            padding: 12px 10px;
+            text-align: center;
+            vertical-align: middle;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        td:first-child {
+            text-align: left;
+        }
+        
+        td:nth-child(2) {
+            text-align: left;
+        }
+        
+        .badge {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .badge-buy {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .badge-sell {
+            background-color: #ffc107;
+            color: #333;
+        }
+        
+        .badge-return {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .quantity {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .timestamp {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-card h3 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        
+        .stat-card p {
+            margin: 5px 0 0 0;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .stat-card.buy {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+        
+        .stat-card.sell {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+            color: #333;
+        }
+        
+        .stat-card.return {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            th, td {
+                font-size: 0.9rem;
+                padding: 8px 5px;
+            }
+            
+            .table-wrapper {
+                font-size: 0.85rem;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<div id="google_translate_element" style="padding:10px; text-align:right;"></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en', 
+    includedLanguages: 'hi,es,fr,ar', // Add whatever languages you want
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+  }, 'google_translate_element');
+}
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<body>
+    <div class="container">
+        <a href="/products" class="btn btn-secondary btn-back">← Back to Products</a>
+        
+        <div class="header">
+            <h1>📊 Stock Movement History</h1>
+            <p>Complete audit trail of all inventory operations (BUY, SELL, RETURN)</p>
+        </div>
+        
+        <!-- Statistics Cards -->
+        {% if movements %}
+            {% set buy_count = movements|selectattr('type', 'equalto', 'BUY')|list|length %}
+            {% set sell_count = movements|selectattr('type', 'equalto', 'SELL')|list|length %}
+            {% set return_count = movements|selectattr('type', 'equalto', 'RETURN')|list|length %}
+            {% set buy_qty = movements|selectattr('type', 'equalto', 'BUY')|map(attribute='quantity')|sum %}
+            {% set sell_qty = movements|selectattr('type', 'equalto', 'SELL')|map(attribute='quantity')|sum %}
+            {% set return_qty = movements|selectattr('type', 'equalto', 'RETURN')|map(attribute='quantity')|sum %}
+            
+            <div class="stats">
+                <div class="stat-card buy">
+                    <h3>{{ buy_count }}</h3>
+                    <p>Buy Operations</p>
+                    <p style="font-size: 0.8rem;">{{ buy_qty }} items</p>
+                </div>
+                <div class="stat-card sell">
+                    <h3>{{ sell_count }}</h3>
+                    <p>Sell Operations</p>
+                    <p style="font-size: 0.8rem;">{{ sell_qty }} items</p>
+                </div>
+                <div class="stat-card return">
+                    <h3>{{ return_count }}</h3>
+                    <p>Return Operations</p>
+                    <p style="font-size: 0.8rem;">{{ return_qty }} items</p>
+                </div>
+                <div class="stat-card">
+                    <h3>{{ movements|length }}</h3>
+                    <p>Total Operations</p>
+                    <p style="font-size: 0.8rem;">All time</p>
+                </div>
+            </div>
+        {% endif %}
+        
+        <!-- Movements Table -->
+        <div class="table-wrapper">
+            {% if movements %}
+                <table class="table table-hover" style="margin-bottom: 0;">
+                    <thead>
+                        <tr>
+                            <th style="width: 12%;">Product SKU</th>
+                            <th style="width: 25%;">Product Name</th>
+                            <th style="width: 15%;">Category</th>
+                            <th style="width: 15%;">Operation</th>
+                            <th style="width: 12%;">Quantity</th>
+                            <th style="width: 21%;">Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for movement in movements %}
+                            <tr>
+                                <td><strong>{{ movement.sku }}</strong></td>
+                                <td>{{ movement.name }}</td>
+                                <td>
+                                    {% if movement.category_name %}
+                                        {{ movement.category_name }}
+                                    {% else %}
+                                        <span style="color: #999;">Uncategorized</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if movement.type == 'BUY' %}
+                                        <span class="badge badge-buy">BUY ⬆️</span>
+                                    {% elif movement.type == 'SELL' %}
+                                        <span class="badge badge-sell">SELL ⬇️</span>
+                                    {% elif movement.type == 'RETURN' %}
+                                        <span class="badge badge-return">RETURN 🔄</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">{{ movement.type }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <span class="quantity">{{ movement.quantity }}</span>
+                                </td>
+                                <td>
+                                    <span class="timestamp">{{ movement.timestamp }}</span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="no-data">
+                    <h5>No stock movements recorded yet</h5>
+                    <p>Start by adding products and performing buy/sell/return operations</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

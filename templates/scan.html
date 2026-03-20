@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode Scanner</title>
+    <script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.20.0/umd/index.min.js"></script>
+    <style>
+
+        :root {
+    --bg-color: #f4f4f4;
+    --container-bg: #ffffff;
+    --text-color: #333333;
+}
+
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --container-bg: #1e1e1e;
+    --text-color: #e0e0e0;
+}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: var(--container-bg);
+            color: var(--text-color);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 10px;
+        }
+        
+        .scanner-section {
+            margin-bottom: 30px;
+        }
+        
+        #camera {
+            width: 100%;
+            max-width: 600px;
+            border: 2px solid #007bff;
+            border-radius: 8px;
+            display: block;
+            margin: 0 auto 20px;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        .status {
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .status.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+        
+        .status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+        
+        .status.info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+            display: block;
+        }
+        
+        .product-info {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            display: none;
+        }
+        
+        .product-info.show {
+            display: block;
+        }
+        
+        .product-info h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .product-field {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .product-field:last-child {
+            border-bottom: none;
+        }
+        
+        .product-field label {
+            font-weight: bold;
+            color: #495057;
+        }
+        
+        .product-field value {
+            color: #333;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        label, h1, h2 {
+    color: var(--label-color);
+}
+    </style>
+</head>
+
+<div id="google_translate_element" style="padding:10px; text-align:right;"></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en', 
+    includedLanguages: 'hi,es,fr,ar', // Add whatever languages you want
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+  }, 'google_translate_element');
+}
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<body>
+    <div class="container">
+        <h1>📷 Barcode Scanner</h1>
+        <button id="theme-toggle" class="btn btn-primary">🌙 Dark Mode</button>
+        
+        <div class="scanner-section">
+            <!-- Mode Selection -->
+            <div class="controls" style="margin-bottom: 20px;">
+                <label style="font-size: 16px; font-weight: bold; margin-right: 20px;">
+                    <input type="radio" name="scan_mode" value="camera" checked onchange="toggleScanMode('camera')"> Scan with Camera
+                </label>
+                <label style="font-size: 16px; font-weight: bold;">
+                    <input type="radio" name="scan_mode" value="manual" onchange="toggleScanMode('manual')"> Enter Barcode Manually
+                </label>
+            </div>
+            
+            <!-- Camera Mode -->
+            <div id="cameraMode" class="scanner-section">
+                <div class="controls">
+                    <button id="startBtn" class="btn btn-success">Start Camera</button>
+                    <button id="stopBtn" class="btn btn-danger" style="display: none;">Stop Camera</button>
+                </div>
+                
+                <div id="status" class="status"></div>
+                
+                <video id="camera" style="display: none;"></video>
+                <canvas id="canvas" style="display: none;"></canvas>
+            </div>
+            
+            <!-- Manual Entry Mode -->
+            <div id="manualMode" style="display: none; padding: 20px; background-color: #f8f9fa; border-radius: 4px; margin-bottom: 20px;">
+                <form id="manualBarcodeForm" onsubmit="searchProductManually(event)">
+                    <div class="form-group" style="margin-bottom: 15px;">
+                        <label for="manualBarcode" style="font-weight: bold; display: block; margin-bottom: 5px;">Enter Barcode Number *</label>
+                        <input type="text" id="manualBarcode" name="barcode" placeholder="Scan or type barcode..." required style="padding: 10px; width: 100%; max-width: 400px; border: 1px solid #ccc; border-radius: 4px;">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search Product</button>
+                </form>
+                <div id="statusManual" class="status"></div>
+            </div>
+        </div>
+        
+        <!-- Product Info Display -->
+        <div id="productInfo" class="product-info">
+            <h2>📦 Product Found</h2>
+            <div class="product-field">
+                <label>Product Name:</label>
+                <span id="productName"></span>
+            </div>
+            <div class="product-field">
+                <label>SKU:</label>
+                <span id="productSku"></span>
+            </div>
+            <div class="product-field">
+                <label>Category:</label>
+                <span id="productCategory"></span>
+            </div>
+            <div class="product-field">
+                <label>Price:</label>
+                <span id="productPrice"></span>
+            </div>
+            <div class="product-field">
+                <label>Quantity:</label>
+                <span id="productQuantity"></span>
+            </div>
+            <div class="product-field">
+                <label>Shelf Number:</label>
+                <span id="productShelf"></span>
+            </div>
+            <div class="product-field">
+                <label>Reorder Level:</label>
+                <span id="productReorder"></span>
+            </div>
+
+            <!-- Buy/Sell Action Section -->
+            <div style="margin-top: 25px; padding-top: 20px; border-top: 2px solid #dee2e6;">
+                <label style="font-weight: bold; display: block; margin-bottom: 15px; font-size: 16px;">Stock Action</label>
+                
+                <form id="actionForm" method="POST" style="display: inline; margin-right: 20px;">
+                    <input type="hidden" name="product_id" id="actionProductId" value="">
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label for="actionQuantity" style="font-weight: bold;">Quantity *</label>
+                        <input type="number" id="actionQuantity" name="quantity" min="1" value="1" required style="padding: 8px; width: 100px; border: 1px solid #ccc; border-radius: 4px;">
+                    </div>
+                    
+                    <button type="submit" name="action" value="sell" class="btn btn-primary" style="background-color: #ffc107; color: #333; margin-right: 10px; font-weight: bold;">💰 SELL PRODUCT</button>
+                    <button type="submit" name="action" value="buy" class="btn btn-success" style="background-color: #28a745; color: white; font-weight: bold;">📥 BUY PRODUCT</button>
+                </form>
+            </div>
+        </div>
+        
+        <a href="/products" class="btn btn-secondary back-link">Back to Products</a>
+    </div>
+    
+    <script>
+        const codeReader = new ZXing.BrowserMultiFormatReader();
+        let isScanning = false;
+        let scannedCodes = new Set();
+        
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const video = document.getElementById('camera');
+        const statusDiv = document.getElementById('status');
+        const productInfoDiv = document.getElementById('productInfo');
+        
+        startBtn.addEventListener('click', async () => {
+            try {
+                statusDiv.textContent = 'Starting camera...';
+                statusDiv.className = 'status info';
+                
+                isScanning = true;
+                startBtn.style.display = 'none';
+                stopBtn.style.display = 'inline-block';
+                video.style.display = 'block';
+                
+                // Start scanning
+                await codeReader.decodeFromVideoDevice(null, video, (result, err) => {
+                    if (result && isScanning) {
+                        const barcode = result.text;
+                        
+                        // Avoid scanning the same code multiple times
+                        if (!scannedCodes.has(barcode)) {
+                            scannedCodes.add(barcode);
+                            
+                            statusDiv.textContent = `Barcode detected: ${barcode}. Searching for product...`;
+                            statusDiv.className = 'status info';
+                            
+                            // Search for product by SKU
+                            searchProduct(barcode);
+                        }
+                    }
+                    
+                    if (err && !(err instanceof ZXing.NotFoundException)) {
+                        console.log('Scanning error:', err);
+                    }
+                });
+                
+                statusDiv.textContent = 'Camera active. Point at a barcode to scan...';
+                statusDiv.className = 'status info';
+            } catch (err) {
+                statusDiv.textContent = `Camera error: ${err.message}. Make sure your browser has camera permission.`;
+                statusDiv.className = 'status error';
+                startBtn.style.display = 'inline-block';
+                stopBtn.style.display = 'none';
+                isScanning = false;
+            }
+        });
+        
+        stopBtn.addEventListener('click', async () => {
+            isScanning = false;
+            await codeReader.reset();
+            video.style.display = 'none';
+            startBtn.style.display = 'inline-block';
+            stopBtn.style.display = 'none';
+            statusDiv.textContent = 'Camera stopped.';
+            statusDiv.className = 'status info';
+            scannedCodes.clear();
+        });
+        
+        function searchProduct(sku) {
+            fetch(`/api/search_by_sku/${encodeURIComponent(sku)}`)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Product not found');
+                    }
+                })
+                .then(product => {
+                    displayProduct(product);
+                    statusDiv.textContent = `✓ Product found: ${product.Name}`;
+                    statusDiv.className = 'status success';
+                })
+                .catch(error => {
+                    statusDiv.textContent = `✗ Error: ${error.message}. Try scanning another barcode.`;
+                    statusDiv.className = 'status error';
+                    scannedCodes.delete(sku); // Allow retry
+                });
+        }
+        
+        function displayProduct(product) {
+            document.getElementById('productName').textContent = product.Name;
+            document.getElementById('productSku').textContent = product.sku;
+            document.getElementById('productCategory').textContent = product.category_name || 'N/A';
+            document.getElementById('productPrice').textContent = `₹${product.price.toFixed(2)}`;
+            document.getElementById('productQuantity').textContent = product.quantity;
+            document.getElementById('productShelf').textContent = product.shelf_number;
+            document.getElementById('productReorder').textContent = product.reorder_level;
+            
+            // Set product ID for buy/sell action
+            document.getElementById('actionProductId').value = product.ID;
+            
+            // Set form submission handler for action buttons
+            const actionForm = document.getElementById('actionForm');
+            actionForm.onsubmit = function(e) {
+                const action = e.submitter.value;
+                const quantity = document.getElementById('actionQuantity').value;
+                
+                if (quantity <= 0) {
+                    e.preventDefault();
+                    alert('Please enter a valid quantity');
+                    return false;
+                }
+                
+                // Validate sell quantity against available stock
+                if (action === 'sell' && quantity > product.quantity) {
+                    e.preventDefault();
+                    alert(`Cannot sell ${quantity} items. Only ${product.quantity} available.`);
+                    return false;
+                }
+                
+                // Set appropriate form action and parameter name
+                const productId = product.ID;
+                if (action === 'sell') {
+                    actionForm.action = `/products/sell/${productId}`;
+                    // Change quantity parameter name to sell_quantity
+                    const qtyInput = document.getElementById('actionQuantity');
+                    const newQtyInput = qtyInput.cloneNode(true);
+                    newQtyInput.name = 'sell_quantity';
+                    qtyInput.parentNode.replaceChild(newQtyInput, qtyInput);
+                    document.getElementById('actionQuantity').value = quantity;
+                } else {
+                    actionForm.action = `/products/buy/${productId}`;
+                    // Change quantity parameter name to buy_quantity
+                    const qtyInput = document.getElementById('actionQuantity');
+                    const newQtyInput = qtyInput.cloneNode(true);
+                    newQtyInput.name = 'buy_quantity';
+                    qtyInput.parentNode.replaceChild(newQtyInput, qtyInput);
+                    document.getElementById('actionQuantity').value = quantity;
+                }
+                
+                return true;
+            };
+            
+            productInfoDiv.classList.add('show');
+        }
+
+        function toggleScanMode(mode) {
+            const cameraMode = document.getElementById('cameraMode');
+            const manualMode = document.getElementById('manualMode');
+            
+            if (mode === 'camera') {
+                cameraMode.style.display = 'block';
+                manualMode.style.display = 'none';
+            } else {
+                cameraMode.style.display = 'none';
+                manualMode.style.display = 'block';
+                document.getElementById('manualBarcode').focus();
+            }
+        }
+
+        function searchProductManually(event) {
+            event.preventDefault();
+            const barcode = document.getElementById('manualBarcode').value.trim();
+            const statusManual = document.getElementById('statusManual');
+            
+            if (!barcode) {
+                statusManual.textContent = '✗ Error: Please enter a barcode.';
+                statusManual.className = 'status error';
+                return;
+            }
+            
+            fetch(`/api/search_by_sku/${encodeURIComponent(barcode)}`)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Product not found');
+                    }
+                })
+                .then(product => {
+                    displayProduct(product);
+                    statusManual.textContent = `✓ Product found: ${product.Name}`;
+                    statusManual.className = 'status success';
+                })
+                .catch(error => {
+                    statusManual.textContent = `✗ Error: ${error.message}`;
+                    statusManual.className = 'status error';
+                });
+        }
+
+        const toggleButton = document.getElementById('theme-toggle');
+
+// 1. Check if a theme is already saved in the browser's memory
+const currentTheme = localStorage.getItem('theme');
+
+if (currentTheme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    if (toggleButton) toggleButton.textContent = '☀️ Light Mode';
+}
+
+// 2. Logic for the button click
+if (toggleButton) {
+    toggleButton.addEventListener('click', () => {
+        let theme = document.documentElement.getAttribute('data-theme');
+        
+        if (theme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light'); // Save preference
+            toggleButton.textContent = '🌙 Dark Mode';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark'); // Save preference
+            toggleButton.textContent = '☀️ Light Mode';
+        }
+    });
+}
+
+    </script>
+</body>
+</html>

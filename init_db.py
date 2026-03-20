@@ -1,12 +1,14 @@
 import mysql.connector
 from mysql.connector import Error
 from datetime import datetime
-# Database Configuration - Update these!
+import os
+
+# Database Configuration - Use environment variables for security!
 db_config = {
-    'host': 'mysql-843df0b-tejas-894a.b.aivencloud.com',
-    'user': 'avnadmin',
-    'password': '', # <-- Update this
-    'port': 23555
+    'host': os.getenv('DB_HOST', 'mysql-843df0b-tejas-894a.b.aivencloud.com'),
+    'user': os.getenv('DB_USER', 'avnadmin'),
+    'password': os.getenv('DB_PASSWORD'),  # Required - set in environment
+    'port': int(os.getenv('DB_PORT', 23555))
 }
 
 DB_NAME = 'inventory_management' # Your database name

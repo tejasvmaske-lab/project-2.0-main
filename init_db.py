@@ -51,7 +51,7 @@ def init_db():
                 quantity INT NOT NULL DEFAULT 0,
                 shelf_number VARCHAR(100),
                 reorder_level INT NOT NULL DEFAULT 10,
-                barcode_path VARCHAR(500),
+                barcode_path LONGTEXT,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (category_id) REFERENCES category_table(id) ON DELETE SET NULL
             ) ENGINE=InnoDB;
@@ -71,6 +71,14 @@ def init_db():
 
         conn.commit()
         print("✓ Tables created successfully!")
+
+        # Modify barcode_path column to support large base64 strings
+        try:
+            cursor.execute("ALTER TABLE product_table MODIFY barcode_path LONGTEXT")
+            conn.commit()
+            print("✓ Updated barcode_path column to LONGTEXT")
+        except:
+            print("✓ barcode_path column already optimized")
 
         # 6. Insert sample categories if empty
         cursor.execute("SELECT COUNT(*) FROM category_table")

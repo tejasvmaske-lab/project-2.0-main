@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, flash
+from flask_babel import Babel, gettext, ngettext, lazy_gettext
 import mysql.connector
 from mysql.connector import Error
 from datetime import datetime
@@ -14,6 +15,38 @@ load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = 'inventory-management-secret-key-2024'
+app.config['BABEL_DEFAULT_LOCALE'] = 'en'
+app.config['BABEL_DEFAULT_TIMEZONE'] = 'UTC'
+app.config['BABEL_TRANSLATION_DIRECTORIES'] = 'translations'
+app.config['LANGUAGES'] = {
+    'en': 'English',
+    'hi': 'हिंदी',
+    'mr': 'मराठी'
+}
+
+babel = Babel(app)
+
+@babel.localeselector
+def get_locale():
+    """Select the best language for the user"""
+    # First, try to get language from URL parameter
+    if request.args.get('lang'):
+        return request.args.get('lang')
+    
+    # Then try to get from session (if using sessions)
+    if request.cookies.get('lang'):
+        return request.cookies.get('lang')
+    
+    # Try to match browser language preferences
+    return request.accept_languages.best_match(app.config['LANGUAGES'].keys()) or 'en'
+
+@app.context_processor
+def inject_languages():
+    """Make language configuration available to all templates"""
+    return {
+        'languages': app.config['LANGUAGES'],
+        'current_language': get_locale()
+    }
 
 # --- MYSQL CONFIGURATION ---
 db_config = {
@@ -66,6 +99,15 @@ def generate_barcode(sku):
         return None
 
 # ==================== ROUTES ====================
+
+@app.route('/set_language/<language>')
+def set_language(language):
+    """Set the user's language preference"""
+    if language in app.config['LANGUAGES']:
+        response = redirect(request.referrer or url_for('admin_dashboard'))
+        response.set_cookie('lang', language, max_age=31536000)  # 1 year
+        return response
+    return redirect(request.referrer or url_for('admin_dashboard'))
 
 @app.route('/')
 def index():
@@ -164,14 +206,14 @@ def add_product():
     # Generate barcode
     barcode_path = generate_barcode(sku)
     if not barcode_path:
-        flash(f'Error: Failed to generate barcode for SKU "{sku}". Check the logs for details.', 'error')
+        flash(gettext(f'Error: Failed to generate barcode for SKU "{sku}". Check the logs for details.'), 'error')
         return redirect(url_for('view_products'))
     
     created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     
     conn = get_db_connection()
     if not conn:
-        flash('Error: Cannot connect to database', 'error')
+        flash(gettext('Error: Cannot connect to database'), 'error')
         return redirect(url_for('view_products'))
     
     cursor = conn.cursor()
@@ -180,10 +222,10 @@ def add_product():
         cursor.execute('INSERT INTO product_table (sku, name, category_id, price, quantity, shelf_number, reorder_level, barcode_path, created_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)', 
                        (sku, name, category_id, price, quantity, shelf_number, reorder_level, barcode_path, created_at))
         conn.commit()
-        flash(f'Product "{name}" added successfully with barcode.', 'success')
+        flash(gettext(f'Product "{name}" added successfully with barcode.'), 'success')
     except Error as e:
         conn.rollback()
-        flash(f'Database error: {e}', 'error')
+        flash(gettext(f'Database error: {e}'), 'error')
     finally:
         cursor.close()
         conn.close()

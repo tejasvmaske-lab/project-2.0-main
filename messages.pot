@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-03-29 14:37+0530\n"
+"POT-Creation-Date: 2026-03-29 14:48+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,179 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: app.py:199
+#: app.py:215
 msgid "Error: Cannot connect to database"
+msgstr ""
+
+#: templates/admin_dashboard.html:212
+msgid "📦 Admin Dashboard"
+msgstr ""
+
+#: templates/admin_dashboard.html:213
+msgid "Manage inventory, products, and view system reports"
+msgstr ""
+
+#: templates/admin_dashboard.html:217
+msgid "📦 Inventory Management"
+msgstr ""
+
+#: templates/admin_dashboard.html:222 templates/admin_dashboard.html:224
+msgid "Add Product"
+msgstr ""
+
+#: templates/admin_dashboard.html:223
+msgid "Create a new product with SKU, name, price, and category."
+msgstr ""
+
+#: templates/admin_dashboard.html:230
+msgid "View Products"
+msgstr ""
+
+#: templates/admin_dashboard.html:231
+msgid "View all products in inventory with filtering and search options."
+msgstr ""
+
+#: templates/admin_dashboard.html:232
+msgid "View Inventory"
+msgstr ""
+
+#: templates/admin_dashboard.html:238 templates/admin_dashboard.html:240
+msgid "Manage Categories"
+msgstr ""
+
+#: templates/admin_dashboard.html:239
+msgid ""
+"Add, edit, and organize product categories for better inventory "
+"management."
+msgstr ""
+
+#: templates/admin_dashboard.html:247
+msgid "📊 Reports & Monitoring"
+msgstr ""
+
+#: templates/admin_dashboard.html:252
+msgid "Stock Transactions"
+msgstr ""
+
+#: templates/admin_dashboard.html:253
+msgid "View all buy, sell, and return transactions with timestamps."
+msgstr ""
+
+#: templates/admin_dashboard.html:254
+msgid "View Transactions"
+msgstr ""
+
+#: templates/admin_dashboard.html:260
+msgid "Inventory History"
+msgstr ""
+
+#: templates/admin_dashboard.html:261
+msgid "Track inventory movements and changes over time."
+msgstr ""
+
+#: templates/admin_dashboard.html:262 templates/employee_dashboard.html:290
+msgid "View History"
+msgstr ""
+
+#: templates/admin_dashboard.html:268
+msgid "System Overview"
+msgstr ""
+
+#: templates/admin_dashboard.html:269
+msgid "Get a complete summary of inventory and transaction data."
+msgstr ""
+
+#: templates/admin_dashboard.html:270
+msgid "View Reports"
+msgstr ""
+
+#: templates/employee_dashboard.html:227
+msgid "👨‍💼 Employee Dashboard"
+msgstr ""
+
+#: templates/employee_dashboard.html:228
+msgid "Quick access to daily supermarket operations and transactions"
+msgstr ""
+
+#: templates/employee_dashboard.html:233
+msgid "Tip:"
+msgstr ""
+
+#: templates/employee_dashboard.html:233
+msgid ""
+"All operations can be performed from here. Use barcode scanning for "
+"faster checkout and restocking."
+msgstr ""
+
+#: templates/employee_dashboard.html:237
+msgid "⚡ Quick Actions"
+msgstr ""
+
+#: templates/employee_dashboard.html:242
+msgid "Scan Product"
+msgstr ""
+
+#: templates/employee_dashboard.html:243
+msgid "Quickly scan or enter a barcode to view product details and options."
+msgstr ""
+
+#: templates/employee_dashboard.html:244
+msgid "Open Scanner"
+msgstr ""
+
+#: templates/employee_dashboard.html:250
+msgid "Sell Product"
+msgstr ""
+
+#: templates/employee_dashboard.html:251
+msgid "Process a product sale. Scan and reduce stock quantity."
+msgstr ""
+
+#: templates/employee_dashboard.html:252
+msgid "Start Sale"
+msgstr ""
+
+#: templates/employee_dashboard.html:258
+msgid "Buy / Restock"
+msgstr ""
+
+#: templates/employee_dashboard.html:259
+msgid "Add products to inventory when restocking arrives."
+msgstr ""
+
+#: templates/employee_dashboard.html:260
+msgid "Restock Item"
+msgstr ""
+
+#: templates/employee_dashboard.html:267
+msgid "🔄 Returns & Issues"
+msgstr ""
+
+#: templates/employee_dashboard.html:272
+msgid "Process Returns"
+msgstr ""
+
+#: templates/employee_dashboard.html:273
+msgid "Handle customer product returns and add items back to inventory."
+msgstr ""
+
+#: templates/employee_dashboard.html:274
+msgid "Process Return"
+msgstr ""
+
+#: templates/employee_dashboard.html:280 templates/employee_dashboard.html:282
+msgid "Manual Entry"
+msgstr ""
+
+#: templates/employee_dashboard.html:281
+msgid "Manually enter SKU or barcode when scanner is unavailable."
+msgstr ""
+
+#: templates/employee_dashboard.html:288
+msgid "Transaction History"
+msgstr ""
+
+#: templates/employee_dashboard.html:289
+msgid "View recent sales, purchases, and returns for the day."
 msgstr ""
 

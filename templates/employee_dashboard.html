@@ -206,75 +206,88 @@
     <nav>
         <a href="/admin">📊 Admin</a>
         <a href="/employee" class="active">👨‍💼 Employee</a>
+        
+        <!-- Language Selector -->
+        <div style="display: flex; gap: 8px; margin-left: auto;">
+            {% for code, name in languages.items() %}
+                <a href="/set_language/{{ code }}" 
+                   style="padding: 8px 14px; border-radius: 4px; text-decoration: none;
+                           background-color: {% if code == current_language %}#27ae60{% else %}#e8f5e9{% endif %};
+                           color: {% if code == current_language %}white{% else %}#333{% endif %};
+                           font-weight: 600; font-size: 13px; transition: all 0.3s ease;">
+                    {{ name }}
+                </a>
+            {% endfor %}
+        </div>
     </nav>
 
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <h1>👨‍💼 Employee Dashboard</h1>
-            <p>Quick access to daily supermarket operations and transactions</p>
+            <h1>{{ _('👨‍💼 Employee Dashboard') }}</h1>
+            <p>{{ _('Quick access to daily supermarket operations and transactions') }}</p>
         </div>
 
         <!-- Quick Note -->
         <div class="quick-note">
-            <p>💡 <strong>Tip:</strong> All operations can be performed from here. Use barcode scanning for faster checkout and restocking.</p>
+            <p>💡 <strong>{{ _('Tip:') }}</strong> {{ _('All operations can be performed from here. Use barcode scanning for faster checkout and restocking.') }}</p>
         </div>
 
         <!-- Quick Actions Section -->
-        <div class="section-title">⚡ Quick Actions</div>
+        <div class="section-title">{{ _('⚡ Quick Actions') }}</div>
         <div class="dashboard-grid">
             <!-- Scan Product -->
             <div class="card">
                 <div class="card-icon">📱</div>
-                <h3>Scan Product</h3>
-                <p>Quickly scan or enter a barcode to view product details and options.</p>
-                <a href="/scan" class="card-button">Open Scanner</a>
+                <h3>{{ _('Scan Product') }}</h3>
+                <p>{{ _('Quickly scan or enter a barcode to view product details and options.') }}</p>
+                <a href="/scan" class="card-button">{{ _('Open Scanner') }}</a>
             </div>
 
             <!-- Sell Product -->
             <div class="card">
                 <div class="card-icon">💳</div>
-                <h3>Sell Product</h3>
-                <p>Process a product sale. Scan and reduce stock quantity.</p>
-                <a href="/scan" class="card-button">Start Sale</a>
+                <h3>{{ _('Sell Product') }}</h3>
+                <p>{{ _('Process a product sale. Scan and reduce stock quantity.') }}</p>
+                <a href="/scan" class="card-button">{{ _('Start Sale') }}</a>
             </div>
 
             <!-- Buy / Restock -->
             <div class="card warning">
                 <div class="card-icon">📦</div>
-                <h3>Buy / Restock</h3>
-                <p>Add products to inventory when restocking arrives.</p>
-                <a href="/products" class="card-button">Restock Item</a>
+                <h3>{{ _('Buy / Restock') }}</h3>
+                <p>{{ _('Add products to inventory when restocking arrives.') }}</p>
+                <a href="/products" class="card-button">{{ _('Restock Item') }}</a>
             </div>
         </div>
 
         <div class="section-divider"></div>
 
         <!-- Returns & Issues Section -->
-        <div class="section-title">🔄 Returns & Issues</div>
+        <div class="section-title">{{ _('🔄 Returns & Issues') }}</div>
         <div class="dashboard-grid">
             <!-- Handle Returns -->
             <div class="card accent">
                 <div class="card-icon">↩️</div>
-                <h3>Process Returns</h3>
-                <p>Handle customer product returns and add items back to inventory.</p>
-                <a href="/returns" class="card-button">Process Return</a>
+                <h3>{{ _('Process Returns') }}</h3>
+                <p>{{ _('Handle customer product returns and add items back to inventory.') }}</p>
+                <a href="/returns" class="card-button">{{ _('Process Return') }}</a>
             </div>
 
             <!-- Manual Barcode Entry -->
             <div class="card">
                 <div class="card-icon">⌨️</div>
-                <h3>Manual Entry</h3>
-                <p>Manually enter SKU or barcode when scanner is unavailable.</p>
-                <a href="/scan" class="card-button">Manual Entry</a>
+                <h3>{{ _('Manual Entry') }}</h3>
+                <p>{{ _('Manually enter SKU or barcode when scanner is unavailable.') }}</p>
+                <a href="/scan" class="card-button">{{ _('Manual Entry') }}</a>
             </div>
 
             <!-- View Transaction History -->
             <div class="card">
                 <div class="card-icon">📜</div>
-                <h3>Transaction History</h3>
-                <p>View recent sales, purchases, and returns for the day.</p>
-                <a href="/stock-history" class="card-button">View History</a>
+                <h3>{{ _('Transaction History') }}</h3>
+                <p>{{ _('View recent sales, purchases, and returns for the day.') }}</p>
+                <a href="/stock-history" class="card-button">{{ _('View History') }}</a>
             </div>
         </div>
     </div>

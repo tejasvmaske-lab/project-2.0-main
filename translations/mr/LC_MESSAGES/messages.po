@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-03-29 14:37+0530\n"
+"POT-Creation-Date: 2026-03-29 14:48+0530\n"
 "PO-Revision-Date: 2026-03-29 14:38+0530\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: mr\n"
@@ -18,7 +18,179 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: app.py:199
+#: app.py:215
 msgid "Error: Cannot connect to database"
 msgstr "त्रुटी: डेटाबेशी कनेक्ट होऊ शकले नाही"
+
+#: templates/admin_dashboard.html:212
+msgid "📦 Admin Dashboard"
+msgstr "📦 प्रशासक डॅशबोर्ड"
+
+#: templates/admin_dashboard.html:213
+msgid "Manage inventory, products, and view system reports"
+msgstr "इन्व्हेंटरी, उत्पादन व्यवस्थापित करा आणि सिस्टम अहवाल पहा"
+
+#: templates/admin_dashboard.html:217
+msgid "📦 Inventory Management"
+msgstr "📦 इन्व्हेंटरी व्यवस्थापन"
+
+#: templates/admin_dashboard.html:222 templates/admin_dashboard.html:224
+msgid "Add Product"
+msgstr "उत्पाद जोडा"
+
+#: templates/admin_dashboard.html:223
+msgid "Create a new product with SKU, name, price, and category."
+msgstr "SKU, नाव, किंमत आणि श्रेणीसह नवीन उत्पाद तयार करा."
+
+#: templates/admin_dashboard.html:230
+msgid "View Products"
+msgstr "उत्पाद पहा"
+
+#: templates/admin_dashboard.html:231
+msgid "View all products in inventory with filtering and search options."
+msgstr "फिल्टरिंग आणि शोध पर्यायांसह इन्व्हेंटरीतील सर्व उत्पाद पहा."
+
+#: templates/admin_dashboard.html:232
+msgid "View Inventory"
+msgstr "इन्व्हेंटरी पहा"
+
+#: templates/admin_dashboard.html:238 templates/admin_dashboard.html:240
+msgid "Manage Categories"
+msgstr "श्रेणी व्यवस्थापित करा"
+
+#: templates/admin_dashboard.html:239
+msgid ""
+"Add, edit, and organize product categories for better inventory "
+"management."
+msgstr "बेहतर इन्व्हेंटरी व्यवस्थापनासाठी उत्पाद श्रेणी जोडा, संपादित आणि आयोजित करा."
+
+#: templates/admin_dashboard.html:247
+msgid "📊 Reports & Monitoring"
+msgstr "📊 अहवाले आणि निरीक्षण"
+
+#: templates/admin_dashboard.html:252
+msgid "Stock Transactions"
+msgstr "स्टॉक व्यवहार"
+
+#: templates/admin_dashboard.html:253
+msgid "View all buy, sell, and return transactions with timestamps."
+msgstr "टाइमस्टॅम्पसह सर्व खरेदी, विक्रय आणि परत व्यवहार पहा."
+
+#: templates/admin_dashboard.html:254
+msgid "View Transactions"
+msgstr "व्यवहार पहा"
+
+#: templates/admin_dashboard.html:260
+msgid "Inventory History"
+msgstr "इन्व्हेंटरी इतिहास"
+
+#: templates/admin_dashboard.html:261
+msgid "Track inventory movements and changes over time."
+msgstr "समयानुसार इन्व्हेंटरी हालचाल आणि बदल ट्रॅक करा."
+
+#: templates/admin_dashboard.html:262 templates/employee_dashboard.html:290
+msgid "View History"
+msgstr "इतिहास पहा"
+
+#: templates/admin_dashboard.html:268
+msgid "System Overview"
+msgstr "सिस्टम विहंगावलोकन"
+
+#: templates/admin_dashboard.html:269
+msgid "Get a complete summary of inventory and transaction data."
+msgstr "इन्व्हेंटरी आणि व्यवहार डेटाचा संपूर्ण सारांश प्राप्त करा."
+
+#: templates/admin_dashboard.html:270
+msgid "View Reports"
+msgstr "अहवाले पहा"
+
+#: templates/employee_dashboard.html:227
+msgid "👨‍💼 Employee Dashboard"
+msgstr "👨‍💼 कर्मचारी डॅशबोर्ड"
+
+#: templates/employee_dashboard.html:228
+msgid "Quick access to daily supermarket operations and transactions"
+msgstr "दैनिक सुपरमार्केट ऑपरेशन आणि व्यवहारांमध्ये द्रुत प्रवेश"
+
+#: templates/employee_dashboard.html:233
+msgid "Tip:"
+msgstr "टिप:"
+
+#: templates/employee_dashboard.html:233
+msgid ""
+"All operations can be performed from here. Use barcode scanning for "
+"faster checkout and restocking."
+msgstr "सर्व ऑपरेशन येथून केले जाऊ शकतात. द्रुत चेकआउट आणि पुन: स्टॉकिंगसाठी बारकोड स्कॅनिंग वापरा."
+
+#: templates/employee_dashboard.html:237
+msgid "⚡ Quick Actions"
+msgstr "⚡ द्रुत कार्य"
+
+#: templates/employee_dashboard.html:242
+msgid "Scan Product"
+msgstr "उत्पाद स्कॅन करा"
+
+#: templates/employee_dashboard.html:243
+msgid "Quickly scan or enter a barcode to view product details and options."
+msgstr "उत्पाद तपशील आणि पर्याय पाहण्यासाठी बारकोड जलद स्कॅन किंवा प्रविष्ट करा."
+
+#: templates/employee_dashboard.html:244
+msgid "Open Scanner"
+msgstr "स्कॅनर उघडा"
+
+#: templates/employee_dashboard.html:250
+msgid "Sell Product"
+msgstr "उत्पाद विक्रय करा"
+
+#: templates/employee_dashboard.html:251
+msgid "Process a product sale. Scan and reduce stock quantity."
+msgstr "उत्पाद विक्रय प्रक्रिया करा. स्टॉक प्रमाण स्कॅन आणि कमी करा."
+
+#: templates/employee_dashboard.html:252
+msgid "Start Sale"
+msgstr "विक्रय सुरू करा"
+
+#: templates/employee_dashboard.html:258
+msgid "Buy / Restock"
+msgstr "खरेदी करा / पुन: स्टॉक करा"
+
+#: templates/employee_dashboard.html:259
+msgid "Add products to inventory when restocking arrives."
+msgstr "पुन: स्टॉकिंग आल्यावर इन्व्हेंटरीमध्ये उत्पाद जोडा."
+
+#: templates/employee_dashboard.html:260
+msgid "Restock Item"
+msgstr "वस्तू पुन: स्टॉक करा"
+
+#: templates/employee_dashboard.html:267
+msgid "🔄 Returns & Issues"
+msgstr "🔄 परत आणि समस्या"
+
+#: templates/employee_dashboard.html:272
+msgid "Process Returns"
+msgstr "परत प्रक्रिया करा"
+
+#: templates/employee_dashboard.html:273
+msgid "Handle customer product returns and add items back to inventory."
+msgstr "ग्राहक उत्पाद परत हाताळा आणि वस्तू इन्व्हेंटरीमध्ये परत जोडा."
+
+#: templates/employee_dashboard.html:274
+msgid "Process Return"
+msgstr "परत प्रक्रिया करा"
+
+#: templates/employee_dashboard.html:280 templates/employee_dashboard.html:282
+msgid "Manual Entry"
+msgstr "मॅनुअल प्रवेश"
+
+#: templates/employee_dashboard.html:281
+msgid "Manually enter SKU or barcode when scanner is unavailable."
+msgstr "स्कॅनर उपलब्ध नसल्यावर SKU किंवा बारकोड मॅनुअली प्रविष्ट करा."
+
+#: templates/employee_dashboard.html:288
+msgid "Transaction History"
+msgstr "व्यवहार इतिहास"
+
+#: templates/employee_dashboard.html:289
+msgid "View recent sales, purchases, and returns for the day."
+msgstr "दिनभराच्या अलिकडील विक्रय, खरेदी आणि परत पहा."
 

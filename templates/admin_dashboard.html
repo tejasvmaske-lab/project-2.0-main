@@ -191,70 +191,83 @@
     <nav>
         <a href="/admin" class="active">📊 Admin</a>
         <a href="/employee">👨‍💼 Employee</a>
+        
+        <!-- Language Selector -->
+        <div style="display: flex; gap: 8px; margin-left: auto;">
+            {% for code, name in languages.items() %}
+                <a href="/set_language/{{ code }}" 
+                   style="padding: 8px 14px; border-radius: 4px; text-decoration: none;
+                           background-color: {% if code == current_language %}#0066cc{% else %}#e8f0f7{% endif %};
+                           color: {% if code == current_language %}white{% else %}#333{% endif %};
+                           font-weight: 600; font-size: 13px; transition: all 0.3s ease;">
+                    {{ name }}
+                </a>
+            {% endfor %}
+        </div>
     </nav>
 
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <h1>📦 Admin Dashboard</h1>
-            <p>Manage inventory, products, and view system reports</p>
+            <h1>{{ _('📦 Admin Dashboard') }}</h1>
+            <p>{{ _('Manage inventory, products, and view system reports') }}</p>
         </div>
 
         <!-- Inventory Management Section -->
-        <div class="section-title">📦 Inventory Management</div>
+        <div class="section-title">{{ _('📦 Inventory Management') }}</div>
         <div class="dashboard-grid">
             <!-- Add Product -->
             <div class="card">
                 <div class="card-icon">➕</div>
-                <h3>Add Product</h3>
-                <p>Create a new product with SKU, name, price, and category.</p>
-                <a href="/products" class="card-button">Add Product</a>
+                <h3>{{ _('Add Product') }}</h3>
+                <p>{{ _('Create a new product with SKU, name, price, and category.') }}</p>
+                <a href="/products" class="card-button">{{ _('Add Product') }}</a>
             </div>
 
             <!-- View Products -->
             <div class="card">
                 <div class="card-icon">📋</div>
-                <h3>View Products</h3>
-                <p>View all products in inventory with filtering and search options.</p>
-                <a href="/products" class="card-button">View Inventory</a>
+                <h3>{{ _('View Products') }}</h3>
+                <p>{{ _('View all products in inventory with filtering and search options.') }}</p>
+                <a href="/products" class="card-button">{{ _('View Inventory') }}</a>
             </div>
 
             <!-- Manage Categories -->
             <div class="card">
                 <div class="card-icon">🏷️</div>
-                <h3>Manage Categories</h3>
-                <p>Add, edit, and organize product categories for better inventory management.</p>
-                <a href="/products" class="card-button">Manage Categories</a>
+                <h3>{{ _('Manage Categories') }}</h3>
+                <p>{{ _('Add, edit, and organize product categories for better inventory management.') }}</p>
+                <a href="/products" class="card-button">{{ _('Manage Categories') }}</a>
             </div>
         </div>
 
         <div class="section-divider"></div>
 
         <!-- Reports & Monitoring Section -->
-        <div class="section-title">📊 Reports & Monitoring</div>
+        <div class="section-title">{{ _('📊 Reports & Monitoring') }}</div>
         <div class="dashboard-grid">
             <!-- Stock Transactions -->
             <div class="card secondary">
                 <div class="card-icon">📈</div>
-                <h3>Stock Transactions</h3>
-                <p>View all buy, sell, and return transactions with timestamps.</p>
-                <a href="/stock-history" class="card-button">View Transactions</a>
+                <h3>{{ _('Stock Transactions') }}</h3>
+                <p>{{ _('View all buy, sell, and return transactions with timestamps.') }}</p>
+                <a href="/stock-history" class="card-button">{{ _('View Transactions') }}</a>
             </div>
 
             <!-- Inventory History -->
             <div class="card secondary">
                 <div class="card-icon">📍</div>
-                <h3>Inventory History</h3>
-                <p>Track inventory movements and changes over time.</p>
-                <a href="/stock-history" class="card-button">View History</a>
+                <h3>{{ _('Inventory History') }}</h3>
+                <p>{{ _('Track inventory movements and changes over time.') }}</p>
+                <a href="/stock-history" class="card-button">{{ _('View History') }}</a>
             </div>
 
             <!-- System Reports -->
             <div class="card accent">
                 <div class="card-icon">📑</div>
-                <h3>System Overview</h3>
-                <p>Get a complete summary of inventory and transaction data.</p>
-                <a href="/stock-history" class="card-button">View Reports</a>
+                <h3>{{ _('System Overview') }}</h3>
+                <p>{{ _('Get a complete summary of inventory and transaction data.') }}</p>
+                <a href="/stock-history" class="card-button">{{ _('View Reports') }}</a>
             </div>
         </div>
     </div>

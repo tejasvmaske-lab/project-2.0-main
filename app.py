@@ -353,5 +353,38 @@ def return_product(id):
         conn.close()
     return redirect(url_for('view_products'))
 
+# --- API ENDPOINT FOR SCAN AND RETURNS ---
+@app.route('/api/search_by_sku/<sku>')
+def search_by_sku(sku):
+    """Search for a product by SKU - Used by scan and returns pages"""
+    conn = get_db_connection()
+    if not conn:
+        return jsonify({'error': 'Database connection failed'}), 500
+    
+    try:
+        cursor = conn.cursor(dictionary=True)
+        
+        query = '''
+            SELECT p.id as ID, p.sku, p.name as Name, p.category_id, p.price, 
+                   p.quantity, p.shelf_number, p.reorder_level, p.barcode_path,
+                   c.name as category_name
+            FROM product_table p
+            LEFT JOIN category_table c ON p.category_id = c.id
+            WHERE p.sku = %s
+        '''
+        
+        cursor.execute(query, (sku,))
+        product = cursor.fetchone()
+        cursor.close()
+        conn.close()
+        
+        if product:
+            return jsonify(product)
+        else:
+            return jsonify({'error': 'Product not found'}), 404
+    except Exception as e:
+        conn.close()
+        return jsonify({'error': f'Database error: {str(e)}'}), 500
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000, use_reloader=False)

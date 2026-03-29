@@ -243,37 +243,56 @@ def returns():
 @app.route('/stock-history')
 def stock_history():
     conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
+    if not conn:
+        return "Error: Cannot connect to database. Please check your database credentials and server configuration.", 500
     
-    # We JOIN with product_table and category_table to get all the info
-    cursor.execute('''
-        SELECT sm.*, p.sku, p.name, c.name as category_name
-        FROM stock_movement sm
-        JOIN product_table p ON sm.product_id = p.id
-        LEFT JOIN category_table c ON p.category_id = c.id
-        ORDER BY sm.timestamp DESC
-    ''')
-    movements = cursor.fetchall()
-    conn.close()
-    
-    return render_template('stock_history.html', movements=movements)
+    try:
+        cursor = conn.cursor(dictionary=True)
+        
+        # We JOIN with product_table and category_table to get all the info
+        cursor.execute('''
+            SELECT sm.*, p.sku, p.name, c.name as category_name
+            FROM stock_movement sm
+            JOIN product_table p ON sm.product_id = p.id
+            LEFT JOIN category_table c ON p.category_id = c.id
+            ORDER BY sm.timestamp DESC
+        ''')
+        movements = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        
+        return render_template('stock_history.html', movements=movements)
+    except Exception as e:
+        conn.close()
+        return f"Database Error: {str(e)}", 500
 
 # --- FIX FOR BUY ---
 @app.route('/products/buy/<int:id>', methods=['POST'])
 def buy_product(id):
     quantity = int(request.form.get('buy_quantity', 0))
     conn = get_db_connection()
-    cursor = conn.cursor()
+    if not conn:
+        flash('Error: Cannot connect to database', 'error')
+        return redirect(url_for('view_products'))
     
-    # 1. Update Product Quantity
-    cursor.execute('UPDATE product_table SET quantity = quantity + %s WHERE id = %s', (quantity, id))
-    
-    # 2. Log the Movement (This is what fixes your empty page!)
-    cursor.execute('INSERT INTO stock_movement (product_id, type, quantity) VALUES (%s, %s, %s)', 
-                   (id, 'BUY', quantity))
-    
-    conn.commit()
-    conn.close()
+    try:
+        cursor = conn.cursor()
+        
+        # 1. Update Product Quantity
+        cursor.execute('UPDATE product_table SET quantity = quantity + %s WHERE id = %s', (quantity, id))
+        
+        # 2. Log the Movement (This is what fixes your empty page!)
+        cursor.execute('INSERT INTO stock_movement (product_id, type, quantity) VALUES (%s, %s, %s)', 
+                       (id, 'BUY', quantity))
+        
+        conn.commit()
+        flash('Product purchased successfully!', 'success')
+    except Exception as e:
+        conn.rollback()
+        flash(f'Database error: {e}', 'error')
+    finally:
+        cursor.close()
+        conn.close()
     return redirect(url_for('view_products'))
 
 # --- FIX FOR SELL ---
@@ -281,17 +300,28 @@ def buy_product(id):
 def sell_product(id):
     quantity = int(request.form.get('sell_quantity', 0))
     conn = get_db_connection()
-    cursor = conn.cursor()
+    if not conn:
+        flash('Error: Cannot connect to database', 'error')
+        return redirect(url_for('view_products'))
     
-    # 1. Update Product Quantity
-    cursor.execute('UPDATE product_table SET quantity = quantity - %s WHERE id = %s', (quantity, id))
-    
-    # 2. Log the Movement
-    cursor.execute('INSERT INTO stock_movement (product_id, type, quantity) VALUES (%s, %s, %s)', 
-                   (id, 'SELL', quantity))
-    
-    conn.commit()
-    conn.close()
+    try:
+        cursor = conn.cursor()
+        
+        # 1. Update Product Quantity
+        cursor.execute('UPDATE product_table SET quantity = quantity - %s WHERE id = %s', (quantity, id))
+        
+        # 2. Log the Movement
+        cursor.execute('INSERT INTO stock_movement (product_id, type, quantity) VALUES (%s, %s, %s)', 
+                       (id, 'SELL', quantity))
+        
+        conn.commit()
+        flash('Product sold successfully!', 'success')
+    except Exception as e:
+        conn.rollback()
+        flash(f'Database error: {e}', 'error')
+    finally:
+        cursor.close()
+        conn.close()
     return redirect(url_for('view_products'))
 
 # --- FIX FOR RETURN ---
@@ -299,17 +329,28 @@ def sell_product(id):
 def return_product(id):
     quantity = int(request.form.get('return_quantity', 0))
     conn = get_db_connection()
-    cursor = conn.cursor()
+    if not conn:
+        flash('Error: Cannot connect to database', 'error')
+        return redirect(url_for('view_products'))
     
-    # 1. Update Product Quantity
-    cursor.execute('UPDATE product_table SET quantity = quantity + %s WHERE id = %s', (quantity, id))
-    
-    # 2. Log the Movement
-    cursor.execute('INSERT INTO stock_movement (product_id, type, quantity) VALUES (%s, %s, %s)', 
-                   (id, 'RETURN', quantity))
-    
-    conn.commit()
-    conn.close()
+    try:
+        cursor = conn.cursor()
+        
+        # 1. Update Product Quantity
+        cursor.execute('UPDATE product_table SET quantity = quantity + %s WHERE id = %s', (quantity, id))
+        
+        # 2. Log the Movement
+        cursor.execute('INSERT INTO stock_movement (product_id, type, quantity) VALUES (%s, %s, %s)', 
+                       (id, 'RETURN', quantity))
+        
+        conn.commit()
+        flash('Product returned successfully!', 'success')
+    except Exception as e:
+        conn.rollback()
+        flash(f'Database error: {e}', 'error')
+    finally:
+        cursor.close()
+        conn.close()
     return redirect(url_for('view_products'))
 
 if __name__ == '__main__':

@@ -22,7 +22,6 @@ db_config = {
     'password': os.getenv('DB_PASSWORD', 'Urus@0657'),
     'database': os.getenv('DB_NAME', 'inventory_management'),
     'port': int(os.getenv('DB_PORT', 3306)),
-    'ssl_disabled': False,
     'autocommit': True
 }
 

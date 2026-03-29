@@ -24,21 +24,20 @@ app.config['LANGUAGES'] = {
     'mr': 'मराठी'
 }
 
-babel = Babel(app)
-
-@babel.localeselector
 def get_locale():
     """Select the best language for the user"""
     # First, try to get language from URL parameter
     if request.args.get('lang'):
         return request.args.get('lang')
     
-    # Then try to get from session (if using sessions)
+    # Then try to get from cookie
     if request.cookies.get('lang'):
         return request.cookies.get('lang')
     
     # Try to match browser language preferences
     return request.accept_languages.best_match(app.config['LANGUAGES'].keys()) or 'en'
+
+babel = Babel(app, locale_selector=get_locale)
 
 @app.context_processor
 def inject_languages():

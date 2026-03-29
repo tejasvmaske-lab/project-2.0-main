@@ -258,26 +258,26 @@
 
 <body>
     <div class="container">
-        <h1>🔄 Returns Management</h1>
-        <button id="theme-toggle" class="btn btn-primary">🌙 Dark Mode</button>        
+        <h1>{{ _('🔄 Returns Management') }}</h1>
+        <button id="theme-toggle" class="btn btn-primary">{{ _('🌙 Dark Mode') }}</button>        
         <div class="scanner-section">
-            <h2>Process Return</h2>
+            <h2>{{ _('Process Return') }}</h2>
             
             <!-- Mode Selection -->
             <div class="controls" style="margin-bottom: 20px;">
                 <label style="font-size: 16px; font-weight: bold; margin-right: 20px;">
-                    <input type="radio" name="return_scan_mode" value="camera" checked onchange="toggleReturnMode('camera')"> Scan with Camera
+                    <input type="radio" name="return_scan_mode" value="camera" checked onchange="toggleReturnMode('camera')"> {{ _('Scan with Camera') }}
                 </label>
                 <label style="font-size: 16px; font-weight: bold;">
-                    <input type="radio" name="return_scan_mode" value="manual" onchange="toggleReturnMode('manual')"> Enter Barcode Manually
+                    <input type="radio" name="return_scan_mode" value="manual" onchange="toggleReturnMode('manual')"> {{ _('Enter Barcode Manually') }}
                 </label>
             </div>
             
             <!-- Camera Mode -->
             <div id="cameraModeReturn" class="scanner-section">
                 <div class="controls">
-                    <button id="startBtn" class="btn btn-success">Start Camera</button>
-                    <button id="stopBtn" class="btn btn-danger" style="display: none;">Stop Camera</button>
+                    <button id="startBtn" class="btn btn-success">{{ _('Start Camera') }}</button>
+                    <button id="stopBtn" class="btn btn-danger" style="display: none;">{{ _('Stop Camera') }}</button>
                 </div>
                 
                 <div id="status" class="status"></div>
@@ -289,10 +289,10 @@
             <div id="manualModeReturn" style="display: none; padding: 20px; background-color: #f8f9fa; border-radius: 4px; margin-bottom: 20px;">
                 <form id="manualBarcodeFormReturn" onsubmit="searchProductManuallyReturn(event)">
                     <div class="form-group" style="margin-bottom: 15px;">
-                        <label for="manualBarcodeReturn" style="font-weight: bold; display: block; margin-bottom: 5px;">Enter Barcode Number *</label>
-                        <input type="text" id="manualBarcodeReturn" name="barcode" placeholder="Scan or type barcode..." required style="padding: 10px; width: 100%; max-width: 400px; border: 1px solid #ccc; border-radius: 4px;">
+                        <label for="manualBarcodeReturn" style="font-weight: bold; display: block; margin-bottom: 5px;">{{ _('Enter Barcode Number *') }}</label>
+                        <input type="text" id="manualBarcodeReturn" name="barcode" placeholder="{{ _('Scan or type barcode...') }}" required style="padding: 10px; width: 100%; max-width: 400px; border: 1px solid #ccc; border-radius: 4px;">
                     </div>
-                    <button type="submit" class="btn btn-primary">Search Product</button>
+                    <button type="submit" class="btn btn-primary">{{ _('Search Product') }}</button>
                 </form>
                 <div id="statusManualReturn" class="status"></div>
             </div>
@@ -300,59 +300,59 @@
         
         <!-- Product Info and Return Form -->
         <div id="productInfo" class="product-info">
-            <h3>📦 Product Found - Enter Return Quantity</h3>
+            <h3>{{ _('📦 Product Found - Enter Return Quantity') }}</h3>
             <div class="product-field">
-                <label>Product Name:</label>
+                <label>{{ _('Product Name:') }}</label>
                 <span id="productName"></span>
             </div>
             <div class="product-field">
-                <label>SKU:</label>
+                <label>{{ _('SKU:') }}</label>
                 <span id="productSku"></span>
             </div>
             <div class="product-field">
-                <label>Category:</label>
+                <label>{{ _('Category:') }}</label>
                 <span id="productCategory"></span>
             </div>
             
             <form id="returnForm" class="return-form" method="POST">
                 <div class="form-group">
-                    <label for="returnQuantity">Return Quantity *</label>
+                    <label for="returnQuantity">{{ _('Return Quantity *') }}</label>
                     <input type="number" id="returnQuantity" name="return_quantity" min="1" required>
                 </div>
-                <button type="submit" class="btn btn-success">Confirm Return</button>
+                <button type="submit" class="btn btn-success">{{ _('Confirm Return') }}</button>
             </form>
 
             <!-- Buy/Sell Action Section -->
             <div style="margin-top: 25px; padding-top: 20px; border-top: 2px solid #dee2e6;">
-                <label style="font-weight: bold; display: block; margin-bottom: 15px; font-size: 16px;">Quick Stock Action</label>
+                <label style="font-weight: bold; display: block; margin-bottom: 15px; font-size: 16px;">{{ _('Quick Stock Action') }}</label>
                 
                 <form id="actionForm" method="POST" style="display: inline; margin-right: 20px;">
                     <input type="hidden" name="product_id" id="actionProductId" value="">
                     
                     <div style="margin-bottom: 15px;">
-                        <label for="actionQuantity" style="font-weight: bold;">Quantity *</label>
+                        <label for="actionQuantity" style="font-weight: bold;">{{ _('Quantity *') }}</label>
                         <input type="number" id="actionQuantity" name="quantity" min="1" value="1" required style="padding: 8px; width: 100px; border: 1px solid #ccc; border-radius: 4px;">
                     </div>
                     
-                    <button type="submit" name="action" value="sell" class="btn btn-primary" style="background-color: #ffc107; color: #333; margin-right: 10px; font-weight: bold;">💰 SELL PRODUCT</button>
-                    <button type="submit" name="action" value="buy" class="btn btn-success" style="background-color: #28a745; color: white; font-weight: bold;">📥 BUY PRODUCT</button>
+                    <button type="submit" name="action" value="sell" class="btn btn-primary" style="background-color: #ffc107; color: #333; margin-right: 10px; font-weight: bold;">{{ _('💰 SELL PRODUCT') }}</button>
+                    <button type="submit" name="action" value="buy" class="btn btn-success" style="background-color: #28a745; color: white; font-weight: bold;">{{ _('📥 BUY PRODUCT') }}</button>
                 </form>
             </div>
         </div>
         
         <!-- Returns History -->
         <div class="table-section">
-            <h2>Recent Returns (Last 50)</h2>
+            <h2>{{ _('Recent Returns (Last 50)') }}</h2>
             
             {% if returns %}
             <table>
                 <thead>
                     <tr>
-                        <th>Date & Time</th>
-                        <th>SKU</th>
-                        <th>Product Name</th>
-                        <th>Category</th>
-                        <th>Quantity Returned</th>
+                        <th>{{ _('Date & Time') }}</th>
+                        <th>{{ _('SKU') }}</th>
+                        <th>{{ _('Product Name') }}</th>
+                        <th>{{ _('Category') }}</th>
+                        <th>{{ _('Quantity Returned') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -369,12 +369,12 @@
             </table>
             {% else %}
             <div class="empty-state">
-                <p>No returns yet. Scan a product barcode to process a return.</p>
+                <p>{{ _('No returns yet. Scan a product barcode to process a return.') }}</p>
             </div>
             {% endif %}
         </div>
         
-        <a href="/products" class="btn btn-secondary back-link">Back to Products</a>
+        <a href="/products" class="btn btn-secondary back-link">{{ _('Back to Products') }}</a>
     </div>
     
     <script>

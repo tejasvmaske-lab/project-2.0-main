@@ -176,11 +176,11 @@
 
 <body>
     <div class="container">
-        <a href="/products" class="btn btn-secondary btn-back">← Back to Products</a>
+        <a href="/products" class="btn btn-secondary btn-back">{{ _('← Back to Products') }}</a>
         
         <div class="header">
-            <h1>📊 Stock Movement History</h1>
-            <p>Complete audit trail of all inventory operations (BUY, SELL, RETURN)</p>
+            <h1>{{ _('📊 Stock Movement History') }}</h1>
+            <p>{{ _('Complete audit trail of all inventory operations (BUY, SELL, RETURN)') }}</p>
         </div>
         
         <!-- Statistics Cards -->
@@ -195,23 +195,23 @@
             <div class="stats">
                 <div class="stat-card buy">
                     <h3>{{ buy_count }}</h3>
-                    <p>Buy Operations</p>
-                    <p style="font-size: 0.8rem;">{{ buy_qty }} items</p>
+                    <p>{{ _('Buy Operations') }}</p>
+                    <p style="font-size: 0.8rem;">{{ buy_qty }} {{ _('items') }}</p>
                 </div>
                 <div class="stat-card sell">
                     <h3>{{ sell_count }}</h3>
-                    <p>Sell Operations</p>
-                    <p style="font-size: 0.8rem;">{{ sell_qty }} items</p>
+                    <p>{{ _('Sell Operations') }}</p>
+                    <p style="font-size: 0.8rem;">{{ sell_qty }} {{ _('items') }}</p>
                 </div>
                 <div class="stat-card return">
                     <h3>{{ return_count }}</h3>
-                    <p>Return Operations</p>
-                    <p style="font-size: 0.8rem;">{{ return_qty }} items</p>
+                    <p>{{ _('Return Operations') }}</p>
+                    <p style="font-size: 0.8rem;">{{ return_qty }} {{ _('items') }}</p>
                 </div>
                 <div class="stat-card">
                     <h3>{{ movements|length }}</h3>
-                    <p>Total Operations</p>
-                    <p style="font-size: 0.8rem;">All time</p>
+                    <p>{{ _('Total Operations') }}</p>
+                    <p style="font-size: 0.8rem;">{{ _('All time') }}</p>
                 </div>
             </div>
         {% endif %}
@@ -222,12 +222,12 @@
                 <table class="table table-hover" style="margin-bottom: 0;">
                     <thead>
                         <tr>
-                            <th style="width: 12%;">Product SKU</th>
-                            <th style="width: 25%;">Product Name</th>
-                            <th style="width: 15%;">Category</th>
-                            <th style="width: 15%;">Operation</th>
-                            <th style="width: 12%;">Quantity</th>
-                            <th style="width: 21%;">Timestamp</th>
+                            <th style="width: 12%;">{{ _('Product SKU') }}</th>
+                            <th style="width: 25%;">{{ _('Product Name') }}</th>
+                            <th style="width: 15%;">{{ _('Category') }}</th>
+                            <th style="width: 15%;">{{ _('Operation') }}</th>
+                            <th style="width: 12%;">{{ _('Quantity') }}</th>
+                            <th style="width: 21%;">{{ _('Timestamp') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -239,16 +239,16 @@
                                     {% if movement.category_name %}
                                         {{ movement.category_name }}
                                     {% else %}
-                                        <span style="color: #999;">Uncategorized</span>
+                                        <span style="color: #999;">{{ _('Uncategorized') }}</span>
                                     {% endif %}
                                 </td>
                                 <td>
                                     {% if movement.type == 'BUY' %}
-                                        <span class="badge badge-buy">BUY ⬆️</span>
+                                        <span class="badge badge-buy">{{ _('BUY') }} ⬆️</span>
                                     {% elif movement.type == 'SELL' %}
-                                        <span class="badge badge-sell">SELL ⬇️</span>
+                                        <span class="badge badge-sell">{{ _('SELL') }} ⬇️</span>
                                     {% elif movement.type == 'RETURN' %}
-                                        <span class="badge badge-return">RETURN 🔄</span>
+                                        <span class="badge badge-return">{{ _('RETURN') }} 🔄</span>
                                     {% else %}
                                         <span class="badge bg-secondary">{{ movement.type }}</span>
                                     {% endif %}
@@ -265,8 +265,8 @@
                 </table>
             {% else %}
                 <div class="no-data">
-                    <h5>No stock movements recorded yet</h5>
-                    <p>Start by adding products and performing buy/sell/return operations</p>
+                    <h5>{{ _('No stock movements recorded yet') }}</h5>
+                    <p>{{ _('Start by adding products and performing buy/sell/return operations') }}</p>
                 </div>
             {% endif %}
         </div>

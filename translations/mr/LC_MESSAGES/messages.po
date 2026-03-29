@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-03-29 14:48+0530\n"
+"POT-Creation-Date: 2026-03-29 15:08+0530\n"
 "PO-Revision-Date: 2026-03-29 14:38+0530\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: mr\n"
@@ -35,6 +35,7 @@ msgid "📦 Inventory Management"
 msgstr "📦 इन्व्हेंटरी व्यवस्थापन"
 
 #: templates/admin_dashboard.html:222 templates/admin_dashboard.html:224
+#: templates/products.html:398
 msgid "Add Product"
 msgstr "उत्पाद जोडा"
 
@@ -62,7 +63,9 @@ msgstr "श्रेणी व्यवस्थापित करा"
 msgid ""
 "Add, edit, and organize product categories for better inventory "
 "management."
-msgstr "बेहतर इन्व्हेंटरी व्यवस्थापनासाठी उत्पाद श्रेणी जोडा, संपादित आणि आयोजित करा."
+msgstr ""
+"बेहतर इन्व्हेंटरी व्यवस्थापनासाठी उत्पाद श्रेणी जोडा, संपादित आणि आयोजित "
+"करा."
 
 #: templates/admin_dashboard.html:247
 msgid "📊 Reports & Monitoring"
@@ -120,7 +123,9 @@ msgstr "टिप:"
 msgid ""
 "All operations can be performed from here. Use barcode scanning for "
 "faster checkout and restocking."
-msgstr "सर्व ऑपरेशन येथून केले जाऊ शकतात. द्रुत चेकआउट आणि पुन: स्टॉकिंगसाठी बारकोड स्कॅनिंग वापरा."
+msgstr ""
+"सर्व ऑपरेशन येथून केले जाऊ शकतात. द्रुत चेकआउट आणि पुन: स्टॉकिंगसाठी "
+"बारकोड स्कॅनिंग वापरा."
 
 #: templates/employee_dashboard.html:237
 msgid "⚡ Quick Actions"
@@ -174,7 +179,7 @@ msgstr "परत प्रक्रिया करा"
 msgid "Handle customer product returns and add items back to inventory."
 msgstr "ग्राहक उत्पाद परत हाताळा आणि वस्तू इन्व्हेंटरीमध्ये परत जोडा."
 
-#: templates/employee_dashboard.html:274
+#: templates/employee_dashboard.html:274 templates/returns.html:264
 msgid "Process Return"
 msgstr "परत प्रक्रिया करा"
 
@@ -193,4 +198,481 @@ msgstr "व्यवहार इतिहास"
 #: templates/employee_dashboard.html:289
 msgid "View recent sales, purchases, and returns for the day."
 msgstr "दिनभराच्या अलिकडील विक्रय, खरेदी आणि परत पहा."
+
+#: templates/products.html:275
+#, fuzzy
+msgid "📦 Product Management"
+msgstr "📦 इन्व्हेंटरी व्यवस्थापन"
+
+#: templates/products.html:291
+#, fuzzy
+msgid "📷 Scan Barcode"
+msgstr "उत्पाद स्कॅन करा"
+
+#: templates/products.html:294
+#, fuzzy
+msgid "🔄 Process Returns"
+msgstr "परत प्रक्रिया करा"
+
+#: templates/products.html:297
+#, fuzzy
+msgid "📊 Stock History"
+msgstr "इन्व्हेंटरी इतिहास"
+
+#: templates/products.html:303 templates/products.html:323
+msgid "Search & Filter"
+msgstr "शोध आणी फिल्टर"
+
+#: templates/products.html:307
+msgid "Search by Product Name"
+msgstr "उत्पाद नावाने शोध"
+
+#: templates/products.html:308
+msgid "Enter product name..."
+msgstr "उत्पाद नाव दक्खल करा..."
+
+#: templates/products.html:312
+msgid "Filter by Category"
+msgstr "श्रेणीसी प्लिलऀ तरॅ करा"
+
+#: templates/products.html:314
+#, fuzzy
+msgid "-- All Categories --"
+msgstr "श्रेणी व्यवस्थापित करा"
+
+#: templates/products.html:324
+msgid "Clear Filters"
+msgstr "प्लिलॆला ससक करा"
+
+#: templates/products.html:331
+#, fuzzy
+msgid "Add New Category"
+msgstr "श्रेणी व्यवस्थापित करा"
+
+#: templates/products.html:335
+msgid "Category Name *"
+msgstr "श्रेणी नाव *"
+
+#: templates/products.html:336
+msgid "e.g., Electronics, Furniture"
+msgstr "तर, इलेक्डक्रॉनळ, परिसर"
+
+#: templates/products.html:341
+#, fuzzy
+msgid "Add Category"
+msgstr "श्रेणी व्यवस्थापित करा"
+
+#: templates/products.html:348
+#, fuzzy
+msgid "Add New Product"
+msgstr "उत्पाद जोडा"
+
+#: templates/products.html:352 templates/products.html:479
+msgid "SKU *"
+msgstr "SKU *"
+
+#: templates/products.html:357 templates/products.html:484
+msgid "Product Name *"
+msgstr "उत्पाद नाव *"
+
+#: templates/products.html:362 templates/products.html:415
+#: templates/products.html:489 templates/returns.html:354
+#: templates/stock_history.html:227
+msgid "Category"
+msgstr "श्रेणी"
+
+#: templates/products.html:364 templates/products.html:491
+msgid "-- No Category --"
+msgstr "-- श्रेणी नाही --"
+
+#: templates/products.html:372 templates/products.html:499
+msgid "Price *"
+msgstr "किंमत *"
+
+#: templates/products.html:377 templates/products.html:504
+#: templates/returns.html:333 templates/scan.html:278
+msgid "Quantity *"
+msgstr "प्रमाण *"
+
+#: templates/products.html:382 templates/products.html:509
+msgid "Shelf Number *"
+msgstr "शेल्फ क्रमांक *"
+
+#: templates/products.html:387 templates/products.html:514
+msgid "Reorder Level *"
+msgstr "पुनःऑर्डर स्तर *"
+
+#: templates/products.html:392
+msgid "Custom Barcode (Optional)"
+msgstr "कस्टम बारकोड (वैकल्पिक)"
+
+#: templates/products.html:393
+msgid "Leave blank to auto-generate from SKU"
+msgstr "SKU वरून स्वयंचलितपणे व्युत्पन्न करण्यासाठी रिक्त ठेवा"
+
+#: templates/products.html:405
+#, python-format
+msgid "Product Inventory (%(count)s items)"
+msgstr "उत्पाद इन्व्हेंटरी (%(count)s आयटम)"
+
+#: templates/products.html:411
+msgid "ID"
+msgstr "ID"
+
+#: templates/products.html:412 templates/returns.html:352
+msgid "SKU"
+msgstr "SKU"
+
+#: templates/products.html:413
+msgid "Name"
+msgstr "नाव"
+
+#: templates/products.html:414
+msgid "Barcode"
+msgstr "बारकोड"
+
+#: templates/products.html:416
+msgid "Price"
+msgstr "किंमत"
+
+#: templates/products.html:417 templates/stock_history.html:229
+msgid "Quantity"
+msgstr "प्रमाण"
+
+#: templates/products.html:418
+msgid "Shelf"
+msgstr "शेल्फ"
+
+#: templates/products.html:419
+msgid "Reorder Level"
+msgstr "पुनःऑर्डर स्तर"
+
+#: templates/products.html:420
+#, fuzzy
+msgid "Actions"
+msgstr "⚡ द्रुत कार्य"
+
+#: templates/products.html:431
+#, fuzzy
+msgid "View Barcode"
+msgstr "उत्पाद पहा"
+
+#: templates/products.html:432
+#, python-format
+msgid "Barcode for %(sku)s"
+msgstr "%(sku)s साठी बारकोड"
+
+#: templates/products.html:435
+msgid "No barcode"
+msgstr "कुणी बारकोड नाही"
+
+#: templates/products.html:442
+msgid "⚠️"
+msgstr "⚠️"
+
+#: templates/products.html:447
+msgid "Edit"
+msgstr "संपादन करा"
+
+#: templates/products.html:448
+msgid "Buy"
+msgstr "खरेदी करा"
+
+#: templates/products.html:449
+msgid "Sell"
+msgstr "बिकणे करा"
+
+#: templates/products.html:450
+#, fuzzy
+msgid "Return"
+msgstr "परत प्रक्रिया करा"
+
+#: templates/products.html:451
+msgid "Are you sure you want to delete this product?"
+msgstr "तुम्हाला हे उत्पाद भुवणाला खत्ठी लि रल्लेल आहे?"
+
+#: templates/products.html:452
+msgid "Delete"
+msgstr "भुवणे करा"
+
+#: templates/products.html:461
+msgid "No products found. Add your first product using the form above."
+msgstr "कुणी उत्पाख आले नाहीत. उपरील ०৯१ वरहले आदल जथते पङ ।"
+
+#: templates/products.html:472
+#, fuzzy
+msgid "Edit Product"
+msgstr "उत्पाद जोडा"
+
+#: templates/products.html:520
+#, fuzzy
+msgid "Update Product"
+msgstr "उत्पाद जोडा"
+
+#: templates/products.html:521 templates/products.html:541
+#: templates/products.html:561 templates/products.html:581
+msgid "Cancel"
+msgstr "रद्द करऺ"
+
+#: templates/products.html:532
+#, fuzzy
+msgid "Buy Stock (Restock)"
+msgstr "खरेदी करा / पुन: स्टॉक करा"
+
+#: templates/products.html:536
+msgid "Quantity to Add *"
+msgstr "केले-लअटाधे साठी प्रमाण *"
+
+#: templates/products.html:540
+msgid "Confirm Buy"
+msgstr "खरेदी सही करा"
+
+#: templates/products.html:552
+#, fuzzy
+msgid "Sell Stock"
+msgstr "उत्पाद विक्रय करा"
+
+#: templates/products.html:556
+msgid "Quantity to Sell *"
+msgstr "बिकणेसाठी प्रमाण *"
+
+#: templates/products.html:560
+msgid "Confirm Sell"
+msgstr "बिकणी सही करऺ"
+
+#: templates/products.html:572
+msgid "Return Stock"
+msgstr "स्तोक परत करऺ"
+
+#: templates/products.html:576
+msgid "Quantity to Return *"
+msgstr "परत केलेसाठी प्रमाण *"
+
+#: templates/products.html:580 templates/returns.html:322
+msgid "Confirm Return"
+msgstr "परत सही करऺ"
+
+#: templates/returns.html:261
+#, fuzzy
+msgid "🔄 Returns Management"
+msgstr "📦 इन्व्हेंटरी व्यवस्थापन"
+
+#: templates/returns.html:262 templates/scan.html:199
+msgid "🌙 Dark Mode"
+msgstr "🌙 डार्क मोड"
+
+#: templates/returns.html:269 templates/scan.html:205
+msgid "Scan with Camera"
+msgstr "कैमेरा असे स्कॅन करा"
+
+#: templates/returns.html:272 templates/scan.html:208
+msgid "Enter Barcode Manually"
+msgstr "मॅन्युअली बारकोड प्रविष्ट करा"
+
+#: templates/returns.html:279 templates/scan.html:215
+#, fuzzy
+msgid "Start Camera"
+msgstr "विक्रय सुरू करा"
+
+#: templates/returns.html:280 templates/scan.html:216
+#, fuzzy
+msgid "Stop Camera"
+msgstr "स्कॅनर उघडा"
+
+#: templates/returns.html:292 templates/scan.html:229
+#, fuzzy
+msgid "Enter Barcode Number *"
+msgstr "उत्पाद नाव दक्खल करा..."
+
+#: templates/returns.html:293 templates/scan.html:230
+#, fuzzy
+msgid "Scan or type barcode..."
+msgstr "उत्पाद स्कॅन करा"
+
+#: templates/returns.html:295 templates/scan.html:232
+#, fuzzy
+msgid "Search Product"
+msgstr "उत्पाद नावाने शोध"
+
+#: templates/returns.html:303
+msgid "📦 Product Found - Enter Return Quantity"
+msgstr "📦 उत्पाद आढळले - परत प्रमाण प्रविष्ट करा"
+
+#: templates/returns.html:305 templates/scan.html:242
+#, fuzzy
+msgid "Product Name:"
+msgstr "उत्पाद नाव *"
+
+#: templates/returns.html:309 templates/scan.html:246
+#, fuzzy
+msgid "SKU:"
+msgstr "SKU"
+
+#: templates/returns.html:313 templates/scan.html:250
+#, fuzzy
+msgid "Category:"
+msgstr "श्रेणी"
+
+#: templates/returns.html:319
+#, fuzzy
+msgid "Return Quantity *"
+msgstr "प्रमाण *"
+
+#: templates/returns.html:327
+#, fuzzy
+msgid "Quick Stock Action"
+msgstr "⚡ द्रुत कार्य"
+
+#: templates/returns.html:337 templates/scan.html:282
+#, fuzzy
+msgid "💰 SELL PRODUCT"
+msgstr "उत्पाद विक्रय करा"
+
+#: templates/returns.html:338 templates/scan.html:283
+#, fuzzy
+msgid "📥 BUY PRODUCT"
+msgstr "उत्पाद जोडा"
+
+#: templates/returns.html:345
+msgid "Recent Returns (Last 50)"
+msgstr "अलीकडील परत (अंतिम 50)"
+
+#: templates/returns.html:351
+msgid "Date & Time"
+msgstr "तारीख आणि वेळ"
+
+#: templates/returns.html:353 templates/stock_history.html:226
+#, fuzzy
+msgid "Product Name"
+msgstr "उत्पाद नाव *"
+
+#: templates/returns.html:355
+#, fuzzy
+msgid "Quantity Returned"
+msgstr "परत केलेसाठी प्रमाण *"
+
+#: templates/returns.html:372
+msgid "No returns yet. Scan a product barcode to process a return."
+msgstr "अद्याप कोणतीही परत नाही. परत प्रक्रिया करण्यासाठी उत्पाद बारकोड स्कॅन करा."
+
+#: templates/returns.html:377 templates/scan.html:288
+#, fuzzy
+msgid "Back to Products"
+msgstr "उत्पाद जोडा"
+
+#: templates/scan.html:198
+#, fuzzy
+msgid "📷 Barcode Scanner"
+msgstr "स्कॅनर उघडा"
+
+#: templates/scan.html:240
+#, fuzzy
+msgid "📦 Product Found"
+msgstr "📦 इन्व्हेंटरी व्यवस्थापन"
+
+#: templates/scan.html:254
+#, fuzzy
+msgid "Price:"
+msgstr "किंमत"
+
+#: templates/scan.html:258
+#, fuzzy
+msgid "Quantity:"
+msgstr "प्रमाण"
+
+#: templates/scan.html:262
+#, fuzzy
+msgid "Shelf Number:"
+msgstr "शेल्फ क्रमांक *"
+
+#: templates/scan.html:266
+#, fuzzy
+msgid "Reorder Level:"
+msgstr "पुनःऑर्डर स्तर"
+
+#: templates/scan.html:272
+#, fuzzy
+msgid "Stock Action"
+msgstr "स्टॉक व्यवहार"
+
+#: templates/stock_history.html:179
+#, fuzzy
+msgid "← Back to Products"
+msgstr "उत्पाद जोडा"
+
+#: templates/stock_history.html:182
+#, fuzzy
+msgid "📊 Stock Movement History"
+msgstr "इन्व्हेंटरी इतिहास"
+
+#: templates/stock_history.html:183
+msgid "Complete audit trail of all inventory operations (BUY, SELL, RETURN)"
+msgstr "सर्व ऑडिट ट्रेल (खरेदी, विक्रय, परत)"
+
+#: templates/stock_history.html:198
+msgid "Buy Operations"
+msgstr "खरेदी ऑपरेशन्स"
+
+#: templates/stock_history.html:199 templates/stock_history.html:204
+#: templates/stock_history.html:209
+msgid "items"
+msgstr "आयटम"
+
+#: templates/stock_history.html:203
+msgid "Sell Operations"
+msgstr "विक्रय ऑपरेशन्स"
+
+#: templates/stock_history.html:208
+msgid "Return Operations"
+msgstr "परत ऑपरेशन्स"
+
+#: templates/stock_history.html:213
+msgid "Total Operations"
+msgstr "एकूण ऑपरेशन्स"
+
+#: templates/stock_history.html:214
+msgid "All time"
+msgstr "सर्व वेळ"
+
+#: templates/stock_history.html:225
+#, fuzzy
+msgid "Product SKU"
+msgstr "उत्पाद पहा"
+
+#: templates/stock_history.html:228
+#, fuzzy
+msgid "Operation"
+msgstr "⚡ द्रुत कार्य"
+
+#: templates/stock_history.html:230
+msgid "Timestamp"
+msgstr "टाइमस्टॅम्प"
+
+#: templates/stock_history.html:242
+#, fuzzy
+msgid "Uncategorized"
+msgstr "श्रेणी व्यवस्थापित करा"
+
+#: templates/stock_history.html:247
+#, fuzzy
+msgid "BUY"
+msgstr "खरेदी करा"
+
+#: templates/stock_history.html:249
+#, fuzzy
+msgid "SELL"
+msgstr "बिकणे करा"
+
+#: templates/stock_history.html:251
+#, fuzzy
+msgid "RETURN"
+msgstr "परत प्रक्रिया करा"
+
+#: templates/stock_history.html:268
+msgid "No stock movements recorded yet"
+msgstr "अद्याप कोणतीही स्टॉक गती रेकॉर्ड केली गेली नाही"
+
+#: templates/stock_history.html:269
+msgid "Start by adding products and performing buy/sell/return operations"
+msgstr "उत्पाद जोडून आणि खरेदी/विक्रय/परत ऑपरेशन्स करून सुरु करा"
 
